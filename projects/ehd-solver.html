@@ -7,19 +7,6 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="../style.css"/>
 <script>(()=>{try{const p=JSON.parse(localStorage.getItem('pm_prefs_v1')||'{}');if(p.theme==='dark')document.documentElement.setAttribute('data-theme','dark');if(p.accent)document.documentElement.setAttribute('data-accent',p.accent);if(p.motion)document.documentElement.setAttribute('data-motion',p.motion);if(p.type)document.documentElement.setAttribute('data-type',p.type);}catch(e){}})();</script>
-<style>
-  .contrib-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.25rem 0; }
-  @media(max-width: 720px) { .contrib-grid { grid-template-columns: 1fr; } }
-  .contrib-card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 1.1rem 1.25rem; }
-  .contrib-card h4 { font-family: var(--f-mono); font-size: .75rem; font-weight: 600; color: var(--accent); margin: 0 0 .5rem; letter-spacing: .04em; text-transform: uppercase; }
-  .contrib-card p { font-size: .82rem; color: var(--ink-2); margin: 0; line-height: 1.6; }
-  .solver-chain { display: flex; flex-direction: column; gap: .5rem; margin: 1.25rem 0; }
-  .chain-step { display: flex; align-items: center; gap: .75rem; }
-  .chain-num { font-family: var(--f-mono); font-size: .68rem; color: var(--accent); min-width: 1.6rem; }
-  .chain-box { background: var(--panel); border: 1px solid var(--line); border-radius: 4px; padding: .4rem .9rem; font-size: .82rem; color: var(--ink-1); flex: 1; }
-  .chain-box strong { color: var(--ink-0); }
-  .chain-arrow { color: var(--ink-3); font-size: .8rem; }
-</style>
 </head>
 <body>
 
@@ -50,91 +37,51 @@
         <p>In the base solver, thermal effects are absent: fluid properties (conductivity, permittivity, surface tension) are treated as constant. This is a significant limitation because many practical EHD applications — electrohydrodynamic heat exchangers, two-phase cooling loops, electrically enhanced boiling — involve strong temperature gradients that feed back into the electrical and interfacial problem. The temperature dependence of electrical conductivity alone can cause order-of-magnitude variation across an interface in thermally stratified flows.</p>
 
         <h3>Objective</h3>
-        <p>Extend <em>interEHDFoam</em> at the solver level to couple the sensible-enthalpy transport equation — enabling simulations in which the temperature field modulates local electrical conductivity, permittivity, and surface tension, and these modifications in turn feed back into the electric body force, the interface dynamics, and the velocity field. The extension must preserve full compatibility with OpenFOAM's PIMPLE loop, native dictionary-based case setup, and the upstream VoF/EHD infrastructure.</p>
+        <p>Extend <em>interEHDFoam</em> at the solver level to couple the sensible-enthalpy transport equation — enabling simulations in which the temperature field modulates local electrical conductivity, permittivity, and surface tension, and these modifications in turn feed back into the electric body force, interface dynamics, and velocity field. The extension must preserve full compatibility with OpenFOAM's PIMPLE loop, native dictionary-based case setup, and the upstream VoF/EHD infrastructure.</p>
 
         <h3>Governing Equations</h3>
         <p>The coupled system solved at each PIMPLE outer iteration consists of five field equations:</p>
-        <ul>
+        <ul class="tl-bullets">
           <li><strong>Continuity:</strong> ∇·U = 0</li>
           <li><strong>Momentum:</strong> ρ[∂U/∂t + (U·∇)U] = −∇p + ∇·(μ∇U) + f<sub>σ</sub> + f<sub>EHD</sub></li>
           <li><strong>VoF phase fraction:</strong> ∂α/∂t + ∇·(αU) + ∇·[α(1−α)U<sub>r</sub>] = 0</li>
           <li><strong>Electric potential:</strong> ∇·(εE) = ρ<sub>e</sub> ; &nbsp; E = −∇φ</li>
-          <li><strong>Sensible-enthalpy transport (new):</strong></li>
+          <li><strong>Sensible-enthalpy transport (new):</strong> ρ ∂h/∂t + ρ(U·∇)h = ∇·(k∇T) + ∇·(M<sub>e</sub>·U) + Φ<sub>visc</sub></li>
         </ul>
-        <div class="equation" style="font-size:.95rem;">
-          ρ ∂h/∂t + ρ(U·∇)h &nbsp;=&nbsp; ∇·(k∇T) + ∇·(M<sub>e</sub>·U) + Φ<sub>visc</sub>
-        </div>
-        <p>where h is the sensible enthalpy, k the thermal conductivity (phase-averaged), M<sub>e</sub> = ε(E⊗E − ½|E|²I) the Maxwell stress tensor, and Φ<sub>visc</sub> the viscous dissipation rate. The EHD body force in the momentum equation is f<sub>EHD</sub> = ρ<sub>e</sub>E − ½|E|²∇ε, combining the free-charge (Coulomb) and dielectrophoretic (gradient-permittivity) contributions.</p>
+        <p>h is the sensible enthalpy, k the thermal conductivity (phase-averaged), M<sub>e</sub> = ε(E⊗E − ½|E|²I) the Maxwell stress tensor, and Φ<sub>visc</sub> the viscous dissipation rate. The EHD body force is f<sub>EHD</sub> = ρ<sub>e</sub>E − ½|E|²∇ε, combining the free-charge (Coulomb) and dielectrophoretic (gradient-permittivity) contributions.</p>
 
         <h3>Solver Extension — What Was Modified</h3>
-
-        <div class="contrib-grid">
-          <div class="contrib-card">
-            <h4>Energy transport equation</h4>
-            <p>Finite-volume discretisation of the sensible-enthalpy equation added to the solver source files. Convective flux assembly uses the same face-interpolated VoF-weighted velocity as the momentum equation. Diffusive flux assembled with VoF-averaged thermal conductivity k = αk<sub>1</sub> + (1−α)k<sub>2</sub>. Implicit time discretisation (Euler implicit) for stability at the small Courant numbers required by the EHD interface (Co ≤ 0.5).</p>
-          </div>
-          <div class="contrib-card">
-            <h4>PIMPLE loop coupling</h4>
-            <p>The enthalpy equation is solved as an outer-loop field after the pressure–velocity convergence is achieved. Temperature is back-calculated from enthalpy (T = h/c<sub>p</sub>, phase-averaged) and used to update temperature-dependent properties before the next outer iteration. This explicit property update introduces one outer-loop lag, consistent with the treatment of surface-tension in the base solver.</p>
-          </div>
-          <div class="contrib-card">
-            <h4>Temperature-dependent properties</h4>
-            <p>Electrical conductivity σ(T) and relative permittivity ε<sub>r</sub>(T) are updated each outer iteration using linear or Arrhenius models specified in the thermophysical properties dictionary. The updated σ and ε fields modify the charge transport equation and Maxwell stress calculation at the next electric-field solve.</p>
-          </div>
-          <div class="contrib-card">
-            <h4>Interfacial energy consistency</h4>
-            <p>The enthalpy jump condition at the interface is handled through the VoF phase-fraction weighting — the same approach used for density and viscosity in interFoam. Latent heat effects (phase change) are outside the current scope; the extension targets subcooled thermal EHD without boiling.</p>
-          </div>
-        </div>
+        <ul class="tl-bullets">
+          <li><strong>Energy transport equation:</strong> Finite-volume discretisation of the sensible-enthalpy equation added to the solver source files. Convective flux assembly uses the same face-interpolated VoF-weighted velocity as the momentum equation. Diffusive flux assembled with VoF-averaged thermal conductivity k = αk<sub>1</sub> + (1−α)k<sub>2</sub>. Implicit time discretisation (Euler implicit) for stability at the small Courant numbers required by the EHD interface (Co ≤ 0.5).</li>
+          <li><strong>PIMPLE loop coupling:</strong> The enthalpy equation is solved as an outer-loop field after pressure–velocity convergence is achieved. Temperature is back-calculated from enthalpy (T = h/c<sub>p</sub>, phase-averaged) and used to update temperature-dependent properties before the next outer iteration. This explicit property update introduces one outer-loop lag, consistent with the treatment of surface tension in the base solver.</li>
+          <li><strong>Temperature-dependent properties:</strong> Electrical conductivity σ(T) and relative permittivity ε<sub>r</sub>(T) are updated each outer iteration using linear or Arrhenius models specified in the thermophysical properties dictionary. The updated σ and ε fields modify the charge transport equation and Maxwell stress calculation at the next electric-field solve.</li>
+          <li><strong>Interfacial energy consistency:</strong> The enthalpy jump condition at the interface is handled through VoF phase-fraction weighting — the same approach used for density and viscosity in <em>interFoam</em>. Latent heat effects (phase change) are outside the current scope; the extension targets subcooled thermal EHD without boiling.</li>
+        </ul>
 
         <h3>PIMPLE Loop Structure</h3>
-        <p>The modified outer-correction loop at each time step:</p>
-
-        <div class="solver-chain">
-          <div class="chain-step">
-            <span class="chain-num">01</span>
-            <div class="chain-box"><strong>VoF advection</strong> — solve phase-fraction equation, update ρ, μ, k, σ, ε at interface</div>
-          </div>
-          <div class="chain-step">
-            <span class="chain-num"></span>
-            <div class="chain-arrow" style="padding-left:1.6rem;">↓</div>
-          </div>
-          <div class="chain-step">
-            <span class="chain-num">02</span>
-            <div class="chain-box"><strong>Electric field solve</strong> — solve Laplace/Poisson equation for φ; compute E = −∇φ, f<sub>EHD</sub>, M<sub>e</sub></div>
-          </div>
-          <div class="chain-step">
-            <span class="chain-num"></span>
-            <div class="chain-arrow" style="padding-left:1.6rem;">↓ (PIMPLE outer loop)</div>
-          </div>
-          <div class="chain-step">
-            <span class="chain-num">03</span>
-            <div class="chain-box"><strong>Momentum predictor</strong> — explicit prediction with EHD body force and surface tension</div>
-          </div>
-          <div class="chain-step">
-            <span class="chain-num">04</span>
-            <div class="chain-box"><strong>PISO pressure–velocity</strong> — pressure equation + velocity corrector (inner loop)</div>
-          </div>
-          <div class="chain-step">
-            <span class="chain-num">05</span>
-            <div class="chain-box"><strong>Enthalpy transport</strong> — <em>new</em>: solve for h; update T, σ(T), ε(T) for next outer iteration</div>
-          </div>
-        </div>
+        <p>The modified outer-correction loop at each time step proceeds through five stages:</p>
+        <ul class="tl-bullets">
+          <li><strong>01 · VoF advection</strong> — solve the phase-fraction equation; update ρ, μ, k, σ, ε at the interface.</li>
+          <li><strong>02 · Electric field solve</strong> — solve Laplace/Poisson equation for φ; compute E = −∇φ, f<sub>EHD</sub>, M<sub>e</sub>.</li>
+          <li><strong>03 · Momentum predictor</strong> — explicit prediction with EHD body force and surface tension contributions.</li>
+          <li><strong>04 · PISO pressure–velocity</strong> — pressure equation + velocity corrector in the PISO inner loop.</li>
+          <li><strong>05 · Enthalpy transport (new)</strong> — solve for h; update T, σ(T), ε(T) for the next outer iteration.</li>
+        </ul>
 
         <h3>Taylor Flow Case</h3>
         <p>The primary test case is Taylor bubble advection through a square capillary cross-section under a transverse electric field. Taylor flow — alternating elongated bubbles and liquid slugs in confined channels — is the flow regime of interest for EHD-enhanced heat transfer in microchannels. Key physical phenomena under investigation:</p>
-        <ul>
+        <ul class="tl-bullets">
           <li><strong>Bubble morphology:</strong> Electric Bond number Ca<sub>E</sub> = ε<sub>0</sub>ε<sub>r</sub>E₀²R / σ<sub>surf</sub> governs the ratio of electric to surface-tension forces. At Ca<sub>E</sub> ~ O(1), measurable bubble elongation and nose/tail deformation are expected.</li>
-          <li><strong>Film thickness:</strong> The liquid film between the bubble wall and the capillary wall is sensitive to both the capillary number and the electric field — EHD-driven secondary flows can thin or thicken the film, directly affecting wall Nusselt number.</li>
+          <li><strong>Film thickness:</strong> The liquid film between the bubble and the capillary wall is sensitive to both capillary number and electric field — EHD-driven secondary flows can thin or thicken the film, directly affecting the wall Nusselt number.</li>
           <li><strong>Velocity field redistribution:</strong> The Maxwell stress at the interface drives secondary vortices in the liquid slug. These alter the mixing and heat transfer characteristics of the slug even in the absence of phase change.</li>
-          <li><strong>Courant stability:</strong> Interface cells require Co ≤ 0.5 to resolve the sharp gradient in α without numerical diffusion. The EHD electric-field solve adds no additional Courant constraint but does require iterative convergence for φ to below 10<sup>−6</sup> at each step.</li>
+          <li><strong>Courant stability:</strong> Interface cells require Co ≤ 0.5 to resolve the sharp gradient in α without numerical diffusion. The EHD electric-field solve adds no additional Courant constraint but does require iterative convergence for φ below 10<sup>−6</sup> at each step.</li>
         </ul>
 
         <h3>Mesh and Numerics</h3>
         <p>Capillary channel geometry meshed in OpenFOAM using <code>blockMesh</code> with localised refinement near the expected bubble region and walls. Interface sharpening in the VoF equation uses the counter-current compression term (compression velocity U<sub>r</sub>). Residual convergence targets: velocity 10<sup>−5</sup>, pressure 10<sup>−4</sup>, electric potential 10<sup>−6</sup>, temperature 10<sup>−5</sup>. All spatial schemes are second-order (Gauss linear). Time integration uses Euler implicit with adaptive time-stepping controlled by the Co ≤ 0.5 constraint.</p>
 
         <h3>Current Status and Outcomes</h3>
-        <ul>
+        <ul class="tl-bullets">
           <li>Base enthalpy transport equation added to the solver and verified against analytical conduction benchmarks (1D transient, steady-state between isothermal walls).</li>
           <li>Temperature-dependent property update loop integrated and tested for single-phase channel flow with σ(T) variation.</li>
           <li>Taylor-flow EHD simulations in progress: bubble morphology data at multiple Ca<sub>E</sub> values being assembled.</li>
