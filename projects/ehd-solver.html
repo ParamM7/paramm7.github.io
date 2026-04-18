@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>interEHDFoam Solver — Param Mankad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,wght@0,400;0,500;1,400&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../style.css"/>
+<script>(()=>{try{const p=JSON.parse(localStorage.getItem('pm_prefs_v1')||'{}');if(p.theme==='dark')document.documentElement.setAttribute('data-theme','dark');if(p.accent)document.documentElement.setAttribute('data-accent',p.accent);if(p.motion)document.documentElement.setAttribute('data-motion',p.motion);if(p.type)document.documentElement.setAttribute('data-type',p.type);}catch(e){}})();</script>
+</head>
+<body>
+
+<nav class="site"><div class="nav-inner">
+  <a href="../index.html" class="brand"><span class="brand-mark"></span>Param Mankad</a>
+  <ul class="nav-links"><li><a href="../about.html">About</a></li><li><a href="../research.html">Research</a></li><li><a href="../experience.html">Experience</a></li><li><a href="../projects.html">Projects</a></li><li><a href="../awards.html">Awards</a></li><li><a href="../skills.html">Skills</a></li><li><a href="../gallery.html">Gallery</a></li></ul>
+  <div class="nav-right"><button class="theme-toggle"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button><a href="../contact.html" class="nav-contact">Contact</a></div>
+  <button class="nav-hamburger"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+</div></nav>
+
+<header class="page-header">
+  <div class="wrap">
+    <div class="page-num mono reveal"><a href="../projects.html" style="color:var(--ink-3);text-decoration:none;">← Projects</a> · 01</div>
+    <h1 class="reveal">interEHDFoam<br/><em style="font-family:var(--f-serif);font-weight:400;">— energy-coupled multiphase solver.</em></h1>
+    <p class="lede reveal" style="margin-top:1.5rem;">Extending a volume-of-fluid electrohydrodynamic solver to include thermal transport — and simulating Taylor flow in capillary channels under external electric fields.</p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="detail-hero reveal"><video src="../images/taylor.mp4" autoplay loop muted playsinline></video></div>
+
+    <div class="detail-grid">
+      <div class="prose reveal">
+        <h3>Context</h3>
+        <p>Multiphase electrohydrodynamics (EHD) studies the coupling between fluid motion and externally applied electric fields across a deformable interface. The OpenFOAM solver <em>interEHDFoam</em> — an EHD variant of <em>interFoam</em> — resolves two-phase flow via the volume-of-fluid (VoF) method while incorporating a Maxwell-stress body force from a solved electric field. It is well-suited for capillary-scale problems where surface tension and electrical forces compete.</p>
+
+        <h3>Objective</h3>
+        <p>Extend the base <em>interEHDFoam</em> solver to couple the sensible-enthalpy transport equation — enabling thermally-driven EHD simulations in which temperature fields modulate conductivity, permittivity, and surface tension, and in turn feed back into the flow.</p>
+
+        <h3>Methods</h3>
+        <ul>
+          <li>Finite-volume discretisation of the sensible-enthalpy transport equation, with diffusive and convective flux assembly consistent with the VoF phase fraction.</li>
+          <li>Implicit pressure–velocity coupling via PIMPLE; Maxwell-stress body force added to momentum equation.</li>
+          <li>Mesh-independence studies performed on capillary geometries with Courant-number control Co ≤ 0.5.</li>
+          <li>Iterative convergence verification for pressure, velocity, electric potential, and temperature residuals.</li>
+        </ul>
+
+        <h3>Taylor flow case</h3>
+        <p>Simulating Taylor bubble advection through a square capillary under an external electric field. Quantifying interfacial deformation, bubble elongation, and velocity-field redistribution as a function of the electric Bond number. Studying the morphological response of the bubble nose and tail, film thickness between bubble and wall, and local Nusselt number along the bubble body.</p>
+
+        <h3>Current status</h3>
+        <p>Solver implementation in progress — base enthalpy transport added and verified against analytic conduction cases. Ongoing: validation against published benchmarks for electrohydrodynamic pumping (Taylor 1966) and Taylor bubble morphology (Bretherton 1961) with EHD forcing.</p>
+
+        <h3>Outcomes</h3>
+        <ul>
+          <li>Working OpenFOAM extension reading from native dictionary entries, preserving upstream compatibility.</li>
+          <li>Validated thermal transport module against conduction benchmarks.</li>
+          <li>Body of Taylor-flow simulation results in progress — to inform a conference/journal manuscript.</li>
+        </ul>
+      </div>
+
+      <aside class="detail-side reveal">
+        <dl class="data-list">
+          <div class="data-row"><dt>Role</dt><dd>Undergraduate Researcher</dd></div>
+          <div class="data-row"><dt>Advisor</dt><dd>Prof. Absar Lakdawala<small>Multiphase Flow Research Lab</small></dd></div>
+          <div class="data-row"><dt>Institution</dt><dd>Nirma University</dd></div>
+          <div class="data-row"><dt>Timeline</dt><dd>Aug 2025 — Present</dd></div>
+          <div class="data-row"><dt>Tools</dt><dd>OpenFOAM · C++ · ParaView · Python<small>Linux HPC</small></dd></div>
+          <div class="data-row"><dt>Domain</dt><dd>CFD · Multiphase · EHD</dd></div>
+        </dl>
+      </aside>
+    </div>
+
+    <div class="fig-row reveal" style="margin-top:4rem;">
+      <div><video src="../images/ehd.mp4" autoplay loop muted playsinline></video></div>
+      <div><video src="../images/taylor.mp4" autoplay loop muted playsinline></video></div>
+    </div>
+  </div>
+</section>
+
+<footer class="site"><div class="wrap"><div class="footer-big reveal">Let's talk<br/><em class="ital">research, admissions, and flow.</em></div><div class="footer-cols"><div class="footer-col"><h5>Contact</h5><a href="mailto:parammankad@gmail.com">parammankad@gmail.com</a><a href="../contact.html">All channels →</a></div><div class="footer-col"><h5>Site</h5><a href="../index.html">Home</a><a href="../about.html">About</a><a href="../projects.html">Projects</a></div><div class="footer-col"><h5>More</h5><a href="../research.html">Research</a><a href="../awards.html">Awards</a><a href="../skills.html">Skills</a></div><div class="footer-col"><h5>Affiliation</h5><p>Nirma University<br/>Ahmedabad, India</p></div></div><div class="footer-meta"><span>© <span class="footer-year">2026</span> · Param Mankad</span><span>v1.0</span></div></div></footer>
+<script src="../shared.js"></script>
+</body></html>

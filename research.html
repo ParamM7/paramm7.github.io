@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Research — Param Mankad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
+<script>(()=>{try{const p=JSON.parse(localStorage.getItem('pm_prefs_v1')||'{}');if(p.theme==='dark')document.documentElement.setAttribute('data-theme','dark');if(p.accent)document.documentElement.setAttribute('data-accent',p.accent);if(p.motion)document.documentElement.setAttribute('data-motion',p.motion);if(p.type)document.documentElement.setAttribute('data-type',p.type);}catch(e){}})();</script>
+</head>
+<body>
+
+<nav class="site"><div class="nav-inner">
+  <a href="index.html" class="brand"><span class="brand-mark"></span>Param Mankad</a>
+  <ul class="nav-links"><li><a href="about.html">About</a></li><li><a href="research.html">Research</a></li><li><a href="experience.html">Experience</a></li><li><a href="projects.html">Projects</a></li><li><a href="awards.html">Awards</a></li><li><a href="skills.html">Skills</a></li><li><a href="gallery.html">Gallery</a></li></ul>
+  <div class="nav-right"><button class="theme-toggle"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button><a href="contact.html" class="nav-contact">Contact</a></div>
+  <button class="nav-hamburger"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+</div></nav>
+
+<header class="page-header" data-flow>
+  <div class="wrap">
+    <div class="page-num mono reveal">§ 02 / Research</div>
+    <h1 class="reveal">Research &amp; Publications</h1>
+    <p class="lede reveal" style="margin-top:1.5rem;">Active research in multiphase electrohydrodynamics, CFD solver development, and UAV aerodynamics — with two publications.</p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="sec-label reveal">Active research</div>
+    <h2 class="reveal" style="margin-bottom:2.5rem;">Three threads</h2>
+    <div class="feat-grid">
+
+      <a href="projects/ehd-solver.html" class="feat-item reveal span-6">
+        <div class="feat-media"><video src="images/ehd.mp4" autoplay loop muted playsinline></video><span class="media-tag">Active</span></div>
+        <div class="feat-body">
+          <div class="mono-sm">Thread 01</div>
+          <h3>Multiphase Electrohydrodynamics Solver</h3>
+          <p>Extending the <em>interEHDFoam</em> solver (EHD variant of <em>interFoam</em>) to couple the energy transport equation with multiphase EHD flow — enabling thermally-coupled electrohydrodynamic simulations. Finite-volume discretisation of the sensible-enthalpy transport equation with diffusive and convective flux assembly. Investigating EHD body-force-driven interfacial instabilities and bubble-morphology deformation under external electric fields in confined capillary geometries.</p>
+          <div class="feat-foot"><div class="chips"><span class="chip">OpenFOAM</span><span class="chip">EHD</span><span class="chip">VoF</span><span class="chip">FVM</span></div><span class="status">Ongoing</span></div>
+        </div>
+      </a>
+
+      <a href="projects/ehd-solver.html" class="feat-item reveal span-6">
+        <div class="feat-media"><video src="images/taylor.mp4" autoplay loop muted playsinline></video><span class="media-tag">Active</span></div>
+        <div class="feat-body">
+          <div class="mono-sm">Thread 02</div>
+          <h3>Taylor Flow in Capillaries Under Electric Fields</h3>
+          <p>Simulating Taylor bubble flow dynamics in capillary channels subject to external electric fields in OpenFOAM. Resolving interfacial deformation, bubble elongation, and velocity-field redistribution under EHD forcing. Studying coupling between Maxwell-stress-induced body forces and multiphase flow topology in confined, low-Bond-number geometries. Courant-number stability (Co ≤ 0.5) and iterative solver convergence for coupled pressure–velocity–electric field solutions.</p>
+          <div class="feat-foot"><div class="chips"><span class="chip">Taylor flow</span><span class="chip">Maxwell stress</span><span class="chip">Capillary</span></div><span class="status">Ongoing</span></div>
+        </div>
+      </a>
+
+      <a href="projects/vtol-uav.html" class="feat-item reveal span-12">
+        <div class="feat-media" style="aspect-ratio: 21/7;"><img src="images/uav-analysis.png" alt="UAV aerodynamic analysis"><span class="media-tag">Applied</span></div>
+        <div class="feat-body">
+          <div class="mono-sm">Thread 03</div>
+          <h3>UAV Aerodynamic Analysis &amp; Validation</h3>
+          <p>Full-configuration CFD of fixed-wing and hybrid VTOL platforms using ANSYS Fluent RANS with rotating MRF subdomain at approximately 9 390 RPM. Analysis of propeller-wake and lifting-surface interaction during VTOL-to-fixed-wing transition; quantification of induced drag and pitching-moment perturbations. Pressure-coefficient distributions, lift/drag polars, and wake-interaction studies to guide geometry refinement. Validated aerodynamic performance of micro-class fixed-wing UAV using XFLR5 panel-method analysis alongside RANS simulations.</p>
+          <div class="feat-foot"><div class="chips"><span class="chip">ANSYS Fluent</span><span class="chip">RANS</span><span class="chip">MRF</span><span class="chip">XFLR5</span></div><span class="status done">Published</span></div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--bg-deep);">
+  <div class="wrap">
+    <div class="sec-label reveal">Publications</div>
+    <h2 class="reveal" style="margin-bottom:2rem;">Published work</h2>
+
+    <div class="data-list reveal">
+      <div class="data-row" style="grid-template-columns: 140px 1fr;padding:1.75rem 0;">
+        <dt>Conf · 2025</dt>
+        <dd>
+          <h3 style="margin-bottom:.5rem;font-size:1.15rem;font-weight:500;">Design Evolution and Aerodynamic Performance Assessment of a Micro-Class Fixed-Wing Unmanned Aerial Vehicle</h3>
+          <p style="font-size:.87rem;color:var(--ink-3);margin:0;">12th International &amp; 52nd National Conference on Fluid Mechanics and Fluid Power (FMFP 2025) · Nirma University, Ahmedabad · Published in conference proceedings</p>
+        </dd>
+      </div>
+      <div class="data-row" style="grid-template-columns: 140px 1fr;padding:1.75rem 0;">
+        <dt>Jour · In prep</dt>
+        <dd>
+          <h3 style="margin-bottom:.5rem;font-size:1.15rem;font-weight:500;">Aerodynamic Performance Assessment of High-Payload Fixed-Wing UAV</h3>
+          <p style="font-size:.87rem;color:var(--ink-3);margin:0;">Manuscript in preparation · Targeting <em>Journal of Flow Visualization and Image Processing</em></p>
+        </dd>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site"><div class="wrap"><div class="footer-cols"><div class="footer-col"><h5>Contact</h5><a href="mailto:parammankad@gmail.com">parammankad@gmail.com</a><a href="contact.html">All channels →</a></div><div class="footer-col"><h5>Site</h5><a href="index.html">Home</a><a href="about.html">About</a><a href="projects.html">Projects</a></div><div class="footer-col"><h5>More</h5><a href="awards.html">Awards</a><a href="skills.html">Skills</a><a href="gallery.html">Gallery</a></div><div class="footer-col"><h5>Affiliation</h5><p>Nirma University, Ahmedabad<br/>Gujarat, India</p></div></div><div class="footer-meta"><span>© <span class="footer-year">2026</span> · Param Mankad</span><span>v1.0</span></div></div></footer>
+<script src="shared.js"></script>
+</body></html>

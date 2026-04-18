@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Experience — Param Mankad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
+<script>(()=>{try{const p=JSON.parse(localStorage.getItem('pm_prefs_v1')||'{}');if(p.theme==='dark')document.documentElement.setAttribute('data-theme','dark');if(p.accent)document.documentElement.setAttribute('data-accent',p.accent);if(p.motion)document.documentElement.setAttribute('data-motion',p.motion);if(p.type)document.documentElement.setAttribute('data-type',p.type);}catch(e){}})();</script>
+<style>
+  .exp-layout { display: grid; grid-template-columns: 1fr 300px; gap: 4rem; align-items: start; }
+  .exp-sidebar { position: sticky; top: 100px; }
+  @media(max-width: 960px) {
+    .exp-layout { grid-template-columns: 1fr; }
+    .exp-sidebar { position: static; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="site"><div class="nav-inner">
+  <a href="index.html" class="brand"><span class="brand-mark"></span>Param Mankad</a>
+  <ul class="nav-links"><li><a href="about.html">About</a></li><li><a href="research.html">Research</a></li><li><a href="experience.html">Experience</a></li><li><a href="projects.html">Projects</a></li><li><a href="awards.html">Awards</a></li><li><a href="skills.html">Skills</a></li><li><a href="gallery.html">Gallery</a></li></ul>
+  <div class="nav-right"><button class="theme-toggle"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button><a href="contact.html" class="nav-contact">Contact</a></div>
+  <button class="nav-hamburger" aria-label="Menu" aria-expanded="false"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+</div></nav>
+
+<header class="page-header" data-flow>
+  <div class="wrap">
+    <div class="page-num mono reveal">§ 03 / Experience</div>
+    <h1 class="reveal">Experience</h1>
+    <p class="lede reveal" style="margin-top:1.5rem;">Undergraduate research at Nirma's Multiphase Flow Lab and five progressive roles at Team Arrow, Nirma University's premier UAV competition team.</p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="exp-layout">
+
+      <!-- Timeline column -->
+      <div>
+        <div class="sec-label reveal">Undergraduate Research</div>
+        <div class="timeline" style="margin-bottom:3.5rem;">
+
+          <div class="tl-item reveal">
+            <div class="tl-mark"></div>
+            <div class="tl-head">
+              <div><h3>Undergraduate Researcher</h3><div class="tl-org">Multiphase Flow Research Lab · Nirma University</div></div>
+              <div class="tl-meta mono">Aug 2025 — Present</div>
+            </div>
+            <p>Working under Prof. Absar Lakdawala on solver-level extension of multiphase electrohydrodynamic CFD. Current scope: incorporating the energy-transport equation into the <em>interEHDFoam</em> solver (OpenFOAM) and running Taylor-flow simulations in capillary channels with external electric fields.</p>
+            <ul class="tl-bullets">
+              <li>Extending <em>interEHDFoam</em> — an EHD variant of <em>interFoam</em> — to couple the energy transport equation with multiphase EHD flow simulations.</li>
+              <li>Implementing finite-volume discretisation of the sensible enthalpy transport equation, including diffusive and convective flux assembly.</li>
+              <li>Running OpenFOAM simulations of Taylor-flow in capillary channels with external electric fields; resolving interfacial dynamics, bubble deformation, and velocity-field redistribution.</li>
+              <li>Verifying Courant-number stability (Co ≤ 0.5) and iterative solver convergence for coupled pressure–velocity–electric field solutions.</li>
+            </ul>
+            <div class="chips" style="margin-top:1rem;"><span class="chip">OpenFOAM (C++)</span><span class="chip">EHD</span><span class="chip">Multiphase</span><span class="chip">FVM</span><span class="chip">Linux</span></div>
+          </div>
+
+        </div>
+
+        <div class="sec-label reveal">Team Arrow · SAE Nirma Collegiate Club</div>
+        <div class="timeline">
+
+          <div class="tl-item reveal">
+            <div class="tl-mark"></div>
+            <div class="tl-head">
+              <div><h3>Mentor</h3><div class="tl-org">SAE Nirma Collegiate Club · Team Arrow</div></div>
+              <div class="tl-meta mono">Feb 2026 — Present</div>
+            </div>
+            <ul class="tl-bullets">
+              <li>Mentoring undergraduate teams in UAV aerodynamics, CFD workflows, and competition strategy for national and international events.</li>
+            </ul>
+          </div>
+
+          <div class="tl-item reveal">
+            <div class="tl-mark"></div>
+            <div class="tl-head">
+              <div><h3>Analysis &amp; Technical Lead</h3><div class="tl-org">SAE Nirma Collegiate Club · Team Arrow</div></div>
+              <div class="tl-meta mono">Mar 2025 — Feb 2026</div>
+            </div>
+            <ul class="tl-bullets">
+              <li>Led computational aerodynamic analysis for multi-rotor drones and fixed-wing UAV platforms using ANSYS Fluent and XFLR5.</li>
+              <li>Directed CFD-informed structural feasibility assessments, weight budget allocation, and aerodynamic efficiency trade-offs across iterative design cycles.</li>
+              <li>Produced and interpreted pressure-coefficient distributions, lift/drag polars, and wake-interaction studies to guide geometry refinement.</li>
+            </ul>
+          </div>
+
+          <div class="tl-item reveal">
+            <div class="tl-mark"></div>
+            <div class="tl-head">
+              <div><h3>Vice Captain</h3><div class="tl-org">SAE Nirma Collegiate Club · Team Arrow</div></div>
+              <div class="tl-meta mono">Oct 2024 — Feb 2026</div>
+            </div>
+            <ul class="tl-bullets">
+              <li>Coordinated UAV development for SAE Aero Design 2026 (Advanced Class) and SAEISS Drone Development Challenge 2025.</li>
+              <li>Oversaw design reviews, system integration, and competition preparation across the full team.</li>
+            </ul>
+          </div>
+
+          <div class="tl-item reveal">
+            <div class="tl-mark"></div>
+            <div class="tl-head">
+              <div><h3>Analysis Engineer</h3><div class="tl-org">SAE Nirma Collegiate Club · Team Arrow</div></div>
+              <div class="tl-meta mono">Oct 2024 — Mar 2025</div>
+            </div>
+            <ul class="tl-bullets">
+              <li>Conducted aerodynamic analysis and performance evaluation of UAV configurations; supported design decisions through CFD results and engineering calculations.</li>
+            </ul>
+          </div>
+
+          <div class="tl-item reveal">
+            <div class="tl-mark"></div>
+            <div class="tl-head">
+              <div><h3>Development Team Member</h3><div class="tl-org">SAE Nirma Collegiate Club · Team Arrow</div></div>
+              <div class="tl-meta mono">Aug 2023 — Oct 2024</div>
+            </div>
+            <ul class="tl-bullets">
+              <li>Contributed to CAD modelling, airframe fabrication, system integration, and ground testing of competition UAVs.</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="exp-sidebar reveal">
+        <div style="overflow:hidden;border-radius:var(--radius-lg);border:1px solid var(--line);margin-bottom:1rem;aspect-ratio:4/3;">
+          <img src="images/team-arrow.jpg" alt="Team Arrow · SUAS 2025" style="width:100%;height:100%;object-fit:cover;">
+        </div>
+        <div style="background:var(--panel);padding:1.5rem;border-radius:var(--radius-lg);">
+          <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1rem;">
+            <img src="images/team-arrow-logo.png" alt="Team Arrow Logo" style="width:52px;height:52px;border-radius:4px;object-fit:contain;background:#fff;padding:4px;flex-shrink:0;">
+            <div>
+              <div style="font-family:var(--f-display);font-size:1rem;font-weight:600;color:#fff;letter-spacing:-.01em;">Team Arrow</div>
+              <div style="font-family:var(--f-mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(233,229,219,.65);margin-top:.2rem;">SAE Nirma Collegiate Club · Est. 2016</div>
+            </div>
+          </div>
+          <p style="font-size:.85rem;color:rgba(233,229,219,.75);margin:0 0 1rem;line-height:1.65;">Nirma University's premier UAV competition team. Competing in SUAS, SAE Aero Design, and SAEISS DDC at national and international levels.</p>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;border-top:1px solid rgba(233,229,219,.12);padding-top:1rem;margin-bottom:1rem;">
+            <div>
+              <div style="font-family:var(--f-display);font-size:1.3rem;font-weight:500;color:#fff;line-height:1;">20+</div>
+              <div style="font-family:var(--f-mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(233,229,219,.5);margin-top:.3rem;">UAVs Built</div>
+            </div>
+            <div>
+              <div style="font-family:var(--f-display);font-size:1.3rem;font-weight:500;color:#fff;line-height:1;">9+</div>
+              <div style="font-family:var(--f-mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(233,229,219,.5);margin-top:.3rem;">Competitions</div>
+            </div>
+            <div>
+              <div style="font-family:var(--f-display);font-size:1.3rem;font-weight:500;color:#fff;line-height:1;">2016</div>
+              <div style="font-family:var(--f-mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(233,229,219,.5);margin-top:.3rem;">Founded</div>
+            </div>
+          </div>
+          <div style="font-size:.8rem;color:rgba(233,229,219,.6);line-height:2.1;border-top:1px solid rgba(233,229,219,.12);padding-top:1rem;">
+            <strong style="color:rgba(233,229,219,.8);">Lab</strong> · Room 206, A Block, Nirma University<br>
+            <strong style="color:rgba(233,229,219,.8);">Manufacturing</strong> · Tinkerers' Lab (B-106)<br>
+            <strong style="color:rgba(233,229,219,.8);">Testing</strong> · Cricket &amp; Dome Grounds<br>
+            <strong style="color:rgba(233,229,219,.8);">Web</strong> · <a href="https://teamarrow.in" target="_blank" rel="noopener" style="color:rgba(233,229,219,.6);">teamarrow.in</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site"><div class="wrap"><div class="footer-cols"><div class="footer-col"><h5>Contact</h5><a href="mailto:parammankad@gmail.com">parammankad@gmail.com</a><a href="https://www.linkedin.com/in/param-mankad-206762284/" target="_blank">LinkedIn →</a><a href="contact.html">All channels →</a></div><div class="footer-col"><h5>Site</h5><a href="index.html">Home</a><a href="about.html">About</a><a href="research.html">Research</a></div><div class="footer-col"><h5>More</h5><a href="projects.html">Projects</a><a href="awards.html">Awards</a><a href="skills.html">Skills</a></div><div class="footer-col"><h5>Affiliation</h5><p>Institute of Technology<br/>Nirma University, Ahmedabad<br/>Gujarat, India</p></div></div><div class="footer-meta"><span>© <span class="footer-year">2026</span> · Param Mankad</span><span>v1.0</span></div></div></footer>
+<script src="shared.js"></script>
+</body></html>

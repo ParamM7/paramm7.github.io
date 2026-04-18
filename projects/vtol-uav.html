@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>VTOL Hybrid UAV — Param Mankad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,wght@0,400;0,500;1,400&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../style.css"/>
+<script>(()=>{try{const p=JSON.parse(localStorage.getItem('pm_prefs_v1')||'{}');if(p.theme==='dark')document.documentElement.setAttribute('data-theme','dark');if(p.accent)document.documentElement.setAttribute('data-accent',p.accent);if(p.motion)document.documentElement.setAttribute('data-motion',p.motion);if(p.type)document.documentElement.setAttribute('data-type',p.type);}catch(e){}})();</script>
+</head>
+<body>
+
+<nav class="site"><div class="nav-inner">
+  <a href="../index.html" class="brand"><span class="brand-mark"></span>Param Mankad</a>
+  <ul class="nav-links"><li><a href="../about.html">About</a></li><li><a href="../research.html">Research</a></li><li><a href="../experience.html">Experience</a></li><li><a href="../projects.html">Projects</a></li><li><a href="../awards.html">Awards</a></li><li><a href="../skills.html">Skills</a></li><li><a href="../gallery.html">Gallery</a></li></ul>
+  <div class="nav-right"><button class="theme-toggle"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button><a href="../contact.html" class="nav-contact">Contact</a></div>
+  <button class="nav-hamburger"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+</div></nav>
+
+<header class="page-header">
+  <div class="wrap">
+    <div class="page-num mono reveal"><a href="../projects.html" style="color:var(--ink-3);text-decoration:none;">← Projects</a> · 02</div>
+    <h1 class="reveal">VTOL–Fixed-Wing<br/><em style="font-family:var(--f-serif);font-weight:400;">hybrid UAV aerodynamics.</em></h1>
+    <p class="lede reveal" style="margin-top:1.5rem;">Full-configuration CFD of a next-generation hybrid UAV: rotating MRF subdomains, transition-regime wake interaction, and induced-drag quantification — delivered during my Axis Aerospace internship.</p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="detail-hero reveal"><img src="../images/uav-analysis.png" alt="VTOL hybrid UAV CFD"/></div>
+
+    <div class="detail-grid">
+      <div class="prose reveal">
+        <h3>Context</h3>
+        <p>VTOL–fixed-wing hybrid UAVs combine the vertical-landing envelope of a multirotor with the range of a fixed-wing aircraft. Their critical flight phase is the <em>transition</em> — during which propeller wakes, lifting-surface downwash, and free-stream flow interact in ways that degrade lift-to-drag ratio if not understood.</p>
+
+        <h3>Objective</h3>
+        <p>Characterise the aerodynamic behaviour of a full-configuration hybrid UAV during hover, transition, and cruise; quantify induced drag and pitching moment across the transition envelope; and propose geometry refinements to mitigate adverse wake interactions.</p>
+
+        <h3>Methods</h3>
+        <ul>
+          <li>Full-configuration CAD prepared in ANSYS SpaceClaim and DesignModeler.</li>
+          <li>Hybrid mesh: structured prism layers in the boundary region, poly-hex core. y⁺ target ≈ 1 for k–ω SST closure.</li>
+          <li>Rotating Multiple Reference Frame (MRF) subdomain at <strong>≈ 9 390 RPM</strong> for each propeller — resolving propeller-wake and lifting-surface interaction without a fully unsteady sliding-mesh solve.</li>
+          <li>RANS simulations in ANSYS Fluent; pressure-coefficient distributions, lift/drag polars, surface streamlines, and wake contours extracted.</li>
+        </ul>
+
+        <h3>Outcomes</h3>
+        <ul>
+          <li>Quantified induced-drag penalty and pitching-moment perturbations through the VTOL-to-fixed-wing transition.</li>
+          <li>Delivered simulation-driven geometry refinements that informed downstream iterations of the aerodynamic surface definition.</li>
+          <li>Established a reusable CFD pipeline — mesh templates, MRF zone definitions, post-processing scripts — adopted by the Axis engineering team.</li>
+        </ul>
+      </div>
+
+      <aside class="detail-side reveal">
+        <dl class="data-list">
+          <div class="data-row"><dt>Role</dt><dd>CFD Research Intern</dd></div>
+          <div class="data-row"><dt>Org</dt><dd>Axis Aerospace &amp; Technologies</dd></div>
+          <div class="data-row"><dt>Timeline</dt><dd>May — Jul 2025</dd></div>
+          <div class="data-row"><dt>Tools</dt><dd>ANSYS Fluent · SpaceClaim · Workbench<small>RANS · MRF · k–ω SST</small></dd></div>
+          <div class="data-row"><dt>Regime</dt><dd>Transonic → Low-Re</dd></div>
+          <div class="data-row"><dt>Propeller</dt><dd>≈ 9 390 RPM</dd></div>
+        </dl>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<footer class="site"><div class="wrap"><div class="footer-big reveal">Let's talk<br/><em class="ital">research, admissions, and flow.</em></div><div class="footer-cols"><div class="footer-col"><h5>Contact</h5><a href="mailto:parammankad@gmail.com">parammankad@gmail.com</a><a href="../contact.html">All channels →</a></div><div class="footer-col"><h5>Site</h5><a href="../index.html">Home</a><a href="../about.html">About</a><a href="../projects.html">Projects</a></div><div class="footer-col"><h5>More</h5><a href="../research.html">Research</a><a href="../awards.html">Awards</a><a href="../skills.html">Skills</a></div><div class="footer-col"><h5>Affiliation</h5><p>Nirma University<br/>Ahmedabad, India</p></div></div><div class="footer-meta"><span>© <span class="footer-year">2026</span> · Param Mankad</span><span>v1.0</span></div></div></footer>
+<script src="../shared.js"></script>
+</body></html>
