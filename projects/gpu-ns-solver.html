@@ -7,34 +7,6 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="../style.css"/>
 <script>(()=>{try{const p=JSON.parse(localStorage.getItem('pm_prefs_v1')||'{}');if(p.theme==='dark')document.documentElement.setAttribute('data-theme','dark');if(p.accent)document.documentElement.setAttribute('data-accent',p.accent);if(p.motion)document.documentElement.setAttribute('data-motion',p.motion);if(p.type)document.documentElement.setAttribute('data-type',p.type);}catch(e){}})();</script>
-<style>
-  .kernel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.25rem 0; }
-  @media(max-width: 720px) { .kernel-grid { grid-template-columns: 1fr; } }
-  .kernel-card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 1.1rem 1.25rem; }
-  .kernel-card h4 { font-family: var(--f-mono); font-size: .78rem; font-weight: 600; color: var(--accent); margin: 0 0 .5rem; letter-spacing: .04em; }
-  .kernel-card p { font-size: .82rem; color: var(--ink-2); margin: 0; line-height: 1.6; }
-  .preset-table { width: 100%; border-collapse: collapse; font-size: .82rem; margin: 1.25rem 0; }
-  .preset-table th { text-align: left; padding: .4rem .75rem; border-bottom: 2px solid var(--line); color: var(--ink-2); font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; font-family: var(--f-mono); }
-  .preset-table td { padding: .42rem .75rem; border-bottom: 1px solid var(--line); color: var(--ink-1); vertical-align: top; }
-  .preset-table tr.active td { background: color-mix(in srgb, var(--accent) 8%, transparent); }
-  .preset-table tr.active td:first-child { border-left: 3px solid var(--accent); padding-left: calc(.75rem - 3px); }
-  .backend-list { list-style: none; padding: 0; margin: 1rem 0; }
-  .backend-list li { display: flex; gap: 1rem; align-items: flex-start; padding: .75rem 0; border-bottom: 1px solid var(--line); }
-  .backend-list li:last-child { border-bottom: none; }
-  .backend-num { font-family: var(--f-mono); font-size: .7rem; color: var(--accent); min-width: 2rem; padding-top: .1rem; }
-  .backend-body strong { display: block; font-size: .88rem; color: var(--ink-0); margin-bottom: .2rem; }
-  .backend-body span { font-size: .8rem; color: var(--ink-2); line-height: 1.55; }
-  .sync-budget { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 1.1rem 1.25rem; font-family: var(--f-mono); font-size: .78rem; margin: 1.25rem 0; }
-  .sync-budget .label { color: var(--ink-3); font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; margin-bottom: .6rem; }
-  .sync-budget .row { display: flex; justify-content: space-between; padding: .3rem 0; border-bottom: 1px solid color-mix(in srgb, var(--line) 50%, transparent); color: var(--ink-1); }
-  .sync-budget .row:last-child { border: none; color: var(--accent); font-weight: 600; }
-  .metric-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin: 1.5rem 0; }
-  @media(max-width: 720px) { .metric-cards { grid-template-columns: repeat(2, 1fr); } }
-  .metric-card { background: var(--panel); border-radius: var(--radius-md); padding: 1.25rem 1rem; border: 1px solid var(--line); }
-  .metric-val { font-family: var(--f-display); font-size: 1.4rem; font-weight: 600; color: var(--ink-0); line-height: 1; }
-  .metric-sub { font-family: var(--f-mono); font-size: .62rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); margin-top: .4rem; }
-  .metric-label { font-size: .8rem; color: var(--ink-2); margin-top: .3rem; }
-</style>
 </head>
 <body>
 
@@ -48,7 +20,7 @@
 <header class="page-header">
   <div class="wrap">
     <div class="page-num mono reveal"><a href="../projects.html" style="color:var(--ink-3);text-decoration:none;">← Projects</a> · 07</div>
-    <h1 class="reveal">GPU-Accelerated 2D NS Solver</h1>
+    <h1 class="reveal">GPU-Accelerated 2D NS Solver<br/><em style="font-family:var(--f-serif);font-weight:400;">— fractional-step FVM with CUDA kernels.</em></h1>
     <p class="lede reveal" style="margin-top:1.5rem;">A 2D incompressible Navier–Stokes solver built from scratch in Python/CuPy with custom CUDA kernels — Chorin fractional-step, Rhie-Chow pressure correction, IBM geometry, and swappable Krylov pressure backends running entirely on GPU.</p>
   </div>
 </header>
@@ -56,169 +28,82 @@
 <section>
   <div class="wrap">
 
-    <div class="metric-cards reveal">
-      <div class="metric-card">
-        <div class="metric-val">float32</div>
-        <div class="metric-label">Precision · RTX 4050</div>
-        <div class="metric-sub">6.44 GB VRAM · Ampere sm_86</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-val">1 sync</div>
-        <div class="metric-label">Per time step (hot loop)</div>
-        <div class="metric-sub">vs 3 in original design</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-val">5</div>
-        <div class="metric-label">Flow presets</div>
-        <div class="metric-sub">Airfoil · Cylinder · Channel · Cavity · Step</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-val">3</div>
-        <div class="metric-label">Pressure backends</div>
-        <div class="metric-sub">CuPy Krylov · AmgX · Red-Black SOR</div>
-      </div>
-    </div>
-
     <div class="detail-grid">
       <div class="prose reveal">
 
         <h3>Context</h3>
-        <p>This is a personal research and learning tool: a complete 2D incompressible Navier–Stokes solver written entirely from scratch in Python with CuPy, keeping all computation on the GPU. The motivation was to build a solver I fully understand at every layer — from the finite-volume flux assembly in CUDA to the pressure Poisson matrix construction in CSR format — to complement the OpenFOAM-based research work and develop fluency in GPU numerical computing.</p>
-        <p>The solver is structured around a <code>FlowPreset</code> dataclass: switching flow cases is a one-line change. All domain parameters, solver settings, geometry, and boundary condition profiles are encapsulated in a preset, so no other file requires editing when changing cases.</p>
+        <p>A personal research and learning tool: a complete 2D incompressible Navier–Stokes solver written from scratch in Python with CuPy, keeping all computation on the GPU. The motivation was to build a solver understood at every layer — from the finite-volume flux assembly in CUDA C++ to the pressure Poisson matrix construction in CSR format — to complement the OpenFOAM-based research work and develop practical fluency in GPU numerical computing.</p>
+        <p>The solver is structured around a frozen <code>FlowPreset</code> dataclass: switching flow cases is a single line change, and all domain parameters, solver tolerances, geometry, and boundary condition profiles are encapsulated in the preset so no other file requires editing.</p>
 
         <h3>Numerical Method</h3>
-        <p>The solver implements Chorin's fractional-step (projection) method on a uniform Cartesian staggered grid with finite-volume discretisation. The time-integration loop follows:</p>
-        <ol>
+        <p>Chorin's fractional-step (projection) method on a uniform Cartesian staggered grid with finite-volume discretisation. Each time step proceeds through four stages:</p>
+        <ul class="tl-bullets">
           <li><strong>Momentum predictor:</strong> Explicit Euler step solving the advection–diffusion equation without pressure. Convective fluxes use first-order upwind (FOU); diffusive fluxes use central differencing. Implemented as a CUDA <code>RawKernel</code> with per-cell metric scaling for variable mesh spacing.</li>
-          <li><strong>Rhie-Chow correction:</strong> Face velocities are reconstructed with a Rhie–Chow interpolation to suppress the checkerboard instability inherent to collocated pressure–velocity storage. The correction accounts for local pressure-gradient differences between face-interpolated and cell-centred values.</li>
-          <li><strong>Pressure Poisson equation:</strong> The PPE right-hand side (divergence of the predicted velocity field, scaled by ρ/dt) is assembled on-GPU. The system A·p = −b (A = negative discrete Laplacian, SPD) is solved by the configured backend (see below).</li>
+          <li><strong>Rhie-Chow correction:</strong> Face velocities are reconstructed with a Rhie–Chow interpolation to suppress the checkerboard pressure–velocity decoupling instability. The correction accounts for the difference between the local face pressure gradient and the cell-centred gradient interpolated to the face.</li>
+          <li><strong>Pressure Poisson equation:</strong> The PPE RHS — divergence of the predicted velocity field scaled by ρ/dt — is assembled on-GPU. The system A·p = −b (A = negative discrete Laplacian, SPD) is solved by the configured backend.</li>
           <li><strong>Velocity corrector:</strong> Cell-centred velocities are corrected by the pressure gradient to enforce incompressibility: u ← u* − (dt/ρ)∇p.</li>
-        </ol>
-        <p>IBM (immersed boundary method) masking zeroes velocities inside body cells after each predictor and corrector step. Local mesh refinement around the body and in the wake is supported through the mesh options dictionary.</p>
+        </ul>
+        <p>IBM (immersed boundary method) masking zeroes velocities inside body cells after each predictor and corrector step. Local mesh refinement around the body and in the wake is supported through the mesh options dictionary in each preset.</p>
 
         <h3>CUDA Kernels</h3>
-        <p>Three primary kernels are compiled at solver startup via <code>cp.RawKernel</code> with <code>--use_fast_math</code>:</p>
-
-        <div class="kernel-grid">
-          <div class="kernel-card">
-            <h4>fvm_navier_stokes_step</h4>
-            <p>Momentum predictor. Computes face mass fluxes (m<sub>e</sub>, m<sub>w</sub>, m<sub>n</sub>, m<sub>s</sub>) via arithmetic face averaging, then evaluates FOU convective and central-differencing diffusive fluxes for both u and v. Writes u_new and v_new; IBM cells zeroed in place.</p>
-          </div>
-          <div class="kernel-card">
-            <h4>rhie_chow_source</h4>
-            <p>PPE RHS assembly with Rhie–Chow face velocity interpolation. Corrects face velocities by the difference between the local pressure gradient and the cell-centred gradient interpolated to the face. Zeroes fluxes across IBM cell boundaries.</p>
-          </div>
-          <div class="kernel-card">
-            <h4>velocity_correct</h4>
-            <p>Applies the pressure correction. Updates u and v using central-difference pressure gradients (p[P+1]−p[P−1]) / (2·dx) at each interior cell. IBM cells are re-masked by the BC manager after this step.</p>
-          </div>
-          <div class="kernel-card">
-            <h4>Diagnostics kernels</h4>
-            <p>Three auxiliary kernels: <code>max_velocity</code> (fused block-reduction for adaptive CFL, avoids cp.hypot temporary), <code>check_nan</code> (atomic flag, deferred to monitor interval), <code>rms_div</code> (masked RMS divergence excluding IBM cells).</p>
-          </div>
-        </div>
+        <p>Three primary kernels are compiled at solver startup via <code>cp.RawKernel</code> with <code>--use_fast_math</code>. All operate on the full 2D domain in a single kernel launch using a 16×16 thread block grid.</p>
+        <ul class="tl-bullets">
+          <li><strong>fvm_navier_stokes_step:</strong> Computes face mass fluxes (m<sub>e</sub>, m<sub>w</sub>, m<sub>n</sub>, m<sub>s</sub>) via arithmetic face averaging, then evaluates FOU convective and central-differencing diffusive fluxes for both u and v. Writes u_new and v_new; IBM cells zeroed in place.</li>
+          <li><strong>rhie_chow_source:</strong> PPE right-hand side assembly with Rhie–Chow face velocity interpolation. Corrects face velocities by the difference between the local pressure gradient and the cell-centred gradient interpolated to the face. Zeroes fluxes across IBM cell boundaries to enforce no-penetration.</li>
+          <li><strong>velocity_correct:</strong> Applies the pressure gradient correction using central-difference stencils (p[P+1]−p[P−1])/(2·dx) at each interior cell. IBM cells re-masked by the BC manager after this step.</li>
+        </ul>
+        <p>Three additional diagnostic kernels run at monitor intervals only: <code>max_velocity</code> (fused block-reduction for adaptive CFL, avoids a <code>cp.hypot</code> temporary array), <code>check_nan</code> (atomically sets a device-side int32 flag — deferred to monitor interval, eliminating one sync per step from the original design), and <code>rms_div</code> (masked RMS divergence excluding IBM cells).</p>
 
         <h3>Pressure Solver Backends</h3>
-        <p>The pressure Poisson equation is the performance-critical step. Three backends are available, selected by flags in <code>poisson.py</code>:</p>
-
-        <ul class="backend-list">
-          <li>
-            <span class="backend-num">01</span>
-            <div class="backend-body">
-              <strong>CuPy Krylov — GPU-native (default)</strong>
-              <span>Builds a CSR Poisson matrix once at startup via <code>build_poisson_csr_gpu</code>. Solves A·p = −b using <code>cupyx.scipy.sparse.linalg</code>: CG for symmetric (cavity), BiCGStab for open/asymmetric (airfoil, channel). Jacobi diagonal preconditioner. Internal solve in float64 for numerical stability, result cast to float32. Zero PCIe transfers during the time loop. O(√N) convergence vs O(N) for Jacobi iteration.</span>
-            </div>
-          </li>
-          <li>
-            <span class="backend-num">02</span>
-            <div class="backend-body">
-              <strong>AmgX PCG+AMG</strong>
-              <span>Algebraic multigrid preconditioned conjugate gradient via the AmgX library, wrapped in Python via ctypes (<code>amgx_wrapper.py</code>). Fast convergence per iteration but requires 4 PCIe round-trips per solve (GPU→CPU→AmgX→CPU→GPU). Recommended only when CuPy Krylov is unavailable.</span>
-            </div>
-          </li>
-          <li>
-            <span class="backend-num">03</span>
-            <div class="backend-body">
-              <strong>Red-Black SOR (fallback)</strong>
-              <span>Fully GPU-resident CUDA kernel. Red-Black ordering makes all updates in each half-sweep data-race-free. Optimal relaxation: ω = 2/(1 + sin(π/min(N<sub>x</sub>,N<sub>y</sub>))). Converges ~20× faster per iteration than the original Jacobi (100 SOR iters ≈ 2000 Jacobi iters for N=200). Used when CuPy Krylov and AmgX are both disabled.</span>
-            </div>
-          </li>
+        <p>Three backends are available, selected by flags in <code>poisson.py</code>:</p>
+        <ul class="tl-bullets">
+          <li><strong>CuPy Krylov — GPU-native (default):</strong> Builds a CSR Poisson matrix once at startup. Solves A·p = −b using <code>cupyx.scipy.sparse.linalg</code> — CG for symmetric (cavity) or BiCGStab for open/asymmetric cases (airfoil, channel). Jacobi diagonal preconditioner. Internal solve in float64 for numerical stability, result cast to float32. Zero PCIe transfers during the time loop. O(√N) convergence versus O(N) for Jacobi iteration.</li>
+          <li><strong>AmgX PCG+AMG:</strong> Algebraic multigrid preconditioned conjugate gradient via the AmgX library, wrapped in Python through ctypes. Fast convergence per iteration but requires 4 PCIe round-trips per solve (GPU→CPU→AmgX→CPU→GPU). Available as a fallback when CuPy Krylov is unavailable.</li>
+          <li><strong>Red-Black SOR (fallback):</strong> Fully GPU-resident CUDA kernel. Red-Black ordering makes all updates in each half-sweep data-race-free. Optimal relaxation: ω = 2/(1 + sin(π/min(N<sub>x</sub>,N<sub>y</sub>))). Converges approximately 20× faster per iteration than the original Jacobi (100 SOR iterations ≈ 2,000 Jacobi iterations for N=200).</li>
         </ul>
 
         <h3>Host–Device Sync Budget</h3>
-        <p>Minimising PCIe round-trips is critical for GPU solver performance. The original design issued three syncs per step; the current implementation reduces this to one:</p>
-
-        <div class="sync-budget">
-          <div class="label">Syncs per time step</div>
-          <div class="row"><span>CFL adaptive dt — cp.max(block_max)</span><span style="color:var(--ink-0);">1 sync · unavoidable</span></div>
-          <div class="row"><span>NaN detection — deferred to monitor interval</span><span style="color:var(--ink-3);">eliminated from hot loop</span></div>
-          <div class="row"><span>Stream.synchronize() barrier — removed</span><span style="color:var(--ink-3);">eliminated — enables pipelining</span></div>
-          <div class="row"><span>Total hot-loop budget</span><span>1 sync/step</span></div>
-        </div>
-        <p>NaN checking uses a device-side int32 flag set atomically by a kernel; it is only pulled to the host at monitoring intervals (configurable, default every 100 steps). Diagnostic reductions (RMS residual, RMS divergence, VRAM usage) are batched into a single <code>Stream.synchronize()</code> at the same interval.</p>
+        <p>Minimising PCIe round-trips is critical on mobile GPU memory (6.44 GB). The original design issued three host-device synchronisations per step; the current implementation reduces this to one:</p>
+        <ul class="tl-bullets">
+          <li><strong>CFL adaptive dt</strong> — one unavoidable sync per step (scalar float cast from the max-velocity reduction).</li>
+          <li><strong>NaN detection</strong> — eliminated from the hot loop. A device-side atomic int32 flag is only pulled to the host at monitoring intervals (default every 100 steps).</li>
+          <li><strong>Stream.synchronize() barrier</strong> — removed entirely, enabling CUDA to pipeline consecutive kernel launches and hide launch latency.</li>
+        </ul>
+        <p>Diagnostic reductions (RMS residual, RMS divergence, VRAM usage) are batched into a single <code>Stream.synchronize()</code> at the same monitor interval, adding one sync every N steps rather than every step.</p>
 
         <h3>Flow Presets</h3>
 
-        <table class="preset-table">
+        <table class="aw-table" style="margin:1.25rem 0 2rem;">
           <thead><tr><th>Preset</th><th>Re</th><th>Domain</th><th>dx</th><th>Geometry</th></tr></thead>
           <tbody>
-            <tr class="active">
-              <td><strong>NACA 0015 Airfoil</strong><br/><span style="font-size:.75rem;color:var(--ink-3);">Active</span></td>
-              <td>50,000</td>
-              <td>[-10, 20] × [-10, 10]</td>
-              <td>0.0075</td>
-              <td>IBM · wake refinement Δx/2</td>
-            </tr>
-            <tr>
-              <td>Circular Cylinder</td>
-              <td>200</td>
-              <td>[-5, 20] × [-8, 8]</td>
-              <td>0.010</td>
-              <td>IBM cylinder r=0.5 · Kármán shedding</td>
-            </tr>
-            <tr>
-              <td>Plane Channel</td>
-              <td>400</td>
-              <td>[0, 20] × [-1, 1]</td>
-              <td>0.010</td>
-              <td>None · Poiseuille analytical check</td>
-            </tr>
-            <tr>
-              <td>Lid-Driven Cavity</td>
-              <td>1,000</td>
-              <td>[0, 1] × [0, 1]</td>
-              <td>0.005</td>
-              <td>None · Ghia 1982 benchmark</td>
-            </tr>
-            <tr>
-              <td>Backward-Facing Step</td>
-              <td>200</td>
-              <td>[0, 30] × [0, 2]</td>
-              <td>0.025</td>
-              <td>IBM rectangle (expansion ratio 2)</td>
-            </tr>
+            <tr style="background:color-mix(in srgb, var(--accent-soft) 60%, transparent);"><td class="comp">NACA 0015 Airfoil ★</td><td>50,000</td><td>[−10,20]×[−10,10]</td><td>0.0075</td><td>IBM · wake refinement</td></tr>
+            <tr><td>Circular Cylinder</td><td>200</td><td>[−5,20]×[−8,8]</td><td>0.010</td><td>IBM cylinder r=0.5</td></tr>
+            <tr><td>Plane Channel</td><td>400</td><td>[0,20]×[−1,1]</td><td>0.010</td><td>None · Poiseuille check</td></tr>
+            <tr><td>Lid-Driven Cavity</td><td>1,000</td><td>[0,1]×[0,1]</td><td>0.005</td><td>None · Ghia 1982 benchmark</td></tr>
+            <tr><td>Backward-Facing Step</td><td>200</td><td>[0,30]×[0,2]</td><td>0.025</td><td>IBM rectangle (Er = 2)</td></tr>
           </tbody>
         </table>
-
-        <p>All presets share the same solver loop and kernel suite. The <code>FlowPreset</code> dataclass is frozen (immutable after construction), so preset parameters cannot be accidentally mutated during a run. CFL ramp parameters prevent impulsive-start pressure shocks by growing the time step from 0.001 to the target CFL over a configurable number of steps.</p>
+        <p style="font-size:.82rem;color:var(--muted);">★ Currently active preset.</p>
 
         <h3>Validation</h3>
-        <p><strong>Ghia et al. (1982) lid-driven cavity:</strong> A multi-Re sweep at Re = 100, 400, 1000, and 3200 on a 129×129 grid (dx = 1/128) was run to compare solver centerline velocity profiles against the published tabulated data. The <code>ghia_validation.py</code> module automates this sweep, interpolates solver output onto the Ghia reference points, and generates comparison plots.</p>
-        <p><strong>Plane channel (Poiseuille flow):</strong> The Re=400 channel preset recovers the analytical parabolic profile u(y) = (3/2)U<sub>∞</sub>[1−(y/H)²] to within the discretisation error on the 2000×200 grid.</p>
-        <p><strong>Vortex shedding:</strong> The cylinder preset at Re=200 develops a Kármán vortex street with a Strouhal number consistent with literature values (St ≈ 0.19) after the CFL ramp.</p>
+        <ul class="tl-bullets">
+          <li><strong>Ghia et al. (1982) lid-driven cavity:</strong> Multi-Re sweep at Re = 100, 400, 1,000, and 3,200 on a 129×129 grid (dx = 1/128). Solver centerline velocity profiles are compared against the published tabulated reference data. The <code>ghia_validation.py</code> module automates the sweep, interpolates solver output onto the Ghia reference points, and generates comparison plots.</li>
+          <li><strong>Plane channel (Poiseuille flow):</strong> The Re=400 channel preset recovers the analytical parabolic profile u(y) = (3/2)U<sub>∞</sub>[1−(y/H)²] to within the discretisation error on the 2,000×200 grid.</li>
+          <li><strong>Kármán vortex street:</strong> The cylinder preset at Re=200 develops periodic vortex shedding with a Strouhal number consistent with experimental literature values (St ≈ 0.19) after the CFL ramp phase.</li>
+        </ul>
 
         <h3>Code Structure</h3>
-        <ul>
-          <li><code>config.py</code> — <code>FlowPreset</code> dataclass + all five preset definitions. One-line switch to change cases.</li>
+        <ul class="tl-bullets">
+          <li><code>config.py</code> — <code>FlowPreset</code> frozen dataclass + all five preset definitions. One-line change to switch cases.</li>
           <li><code>gpu_kernels.py</code> — Three CUDA <code>RawKernel</code> objects: NS predictor, Rhie-Chow source, velocity corrector.</li>
           <li><code>poisson.py</code> — Backend selection flags, <code>CuPyPoissonSolver</code> class, Red-Black SOR kernel.</li>
           <li><code>gpu_csr_builder.py</code> — Assembles the sparse CSR Poisson matrix on-GPU.</li>
-          <li><code>diagnostics.py</code> — <code>DiagnosticsManager</code>: NaN flag, fused max-velocity, RMS divergence, CUDA event timing.</li>
-          <li><code>solver.py</code> — Main fractional-step time loop.</li>
-          <li><code>geometry.py</code> — IBM geometry factory: NACA profile, cylinder, rectangle, flat plate.</li>
-          <li><code>boundary_conditions.py</code> — BC profiles indexed by preset name.</li>
-          <li><code>ghia_validation.py</code> — Automated Ghia 1982 validation sweep.</li>
-          <li><code>tecplot_writer.py</code> — Writes final flow field to Tecplot ASCII format for post-processing.</li>
+          <li><code>diagnostics.py</code> — <code>DiagnosticsManager</code>: NaN flag kernel, fused max-velocity reduction, RMS divergence, CUDA event timing.</li>
+          <li><code>solver.py</code> — Main fractional-step time loop with backend selection and adaptive time stepping.</li>
+          <li><code>geometry.py</code> — IBM geometry factory: NACA profile generation, cylinder, rectangle, flat plate.</li>
+          <li><code>boundary_conditions.py</code> — BC profiles indexed by preset bc_profile key.</li>
+          <li><code>ghia_validation.py</code> — Automated Ghia 1982 multi-Re validation sweep.</li>
+          <li><code>tecplot_writer.py</code> — Writes final flow field to Tecplot ASCII format for post-processing in ParaView or Tecplot 360.</li>
         </ul>
 
       </div>
@@ -226,15 +111,16 @@
       <aside class="detail-side reveal">
         <dl class="data-list">
           <div class="data-row"><dt>Role</dt><dd>Solo developer</dd></div>
+          <div class="data-row"><dt>Timeline</dt><dd>2025 — Present</dd></div>
           <div class="data-row"><dt>Status</dt><dd>Active · ongoing</dd></div>
           <div class="data-row"><dt>Hardware</dt><dd>NVIDIA RTX 4050 Mobile<small>6.44 GB VRAM · Ampere sm_86</small></dd></div>
           <div class="data-row"><dt>Language</dt><dd>Python · CUDA C++<small>CuPy RawKernel · float32</small></dd></div>
           <div class="data-row"><dt>Method</dt><dd>Chorin fractional-step<small>FVM · Cartesian · IBM</small></dd></div>
           <div class="data-row"><dt>Convection</dt><dd>First-order upwind (FOU)</dd></div>
           <div class="data-row"><dt>Diffusion</dt><dd>Central differencing</dd></div>
-          <div class="data-row"><dt>Pressure</dt><dd>Rhie-Chow + CuPy Krylov<small>BiCGStab / CG · Jacobi precond.</small></dd></div>
-          <div class="data-row"><dt>Validation</dt><dd>Ghia 1982 · Poiseuille · Kármán</dd></div>
-          <div class="data-row"><dt>Active preset</dt><dd>NACA 0015 Re 50,000</dd></div>
+          <div class="data-row"><dt>Pressure</dt><dd>Rhie-Chow + CuPy BiCGStab<small>Jacobi precond. · GPU-native</small></dd></div>
+          <div class="data-row"><dt>Validation</dt><dd>Ghia 1982 · Poiseuille · Kármán St</dd></div>
+          <div class="data-row"><dt>Active preset</dt><dd>NACA 0015 · Re 50,000</dd></div>
         </dl>
       </aside>
     </div>
