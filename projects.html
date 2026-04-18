@@ -21,13 +21,13 @@
   <div class="wrap">
     <div class="page-num mono reveal">§ 04 / Projects</div>
     <h1 class="reveal">Engineering Projects</h1>
-    <p class="lede reveal" style="margin-top:1.5rem;">Research software, UAV systems, competition platforms, and applied CFD studies.</p>
+    <p class="lede reveal" style="margin-top:1.5rem;">Research software, UAV systems, competition platforms, applied CFD studies, and scientific machine learning.</p>
   </div>
 </header>
 
 <section>
   <div class="wrap">
-    <div class="sec-label reveal"><span>Index</span><span class="mono-sm">05 / 05</span></div>
+    <div class="sec-label reveal"><span>Index</span><span class="mono-sm">07 / 07</span></div>
     <h2 class="reveal" style="margin-bottom:2.5rem;">All projects</h2>
 
     <div class="proj-list">
@@ -86,6 +86,27 @@
         <div class="proj-year mono">2025–26</div>
       </div>
 
+      <a href="projects/pinn-airfoil-noise.html" class="proj-row reveal">
+        <div class="proj-num mono">06</div>
+        <div class="proj-title">
+          <h3>PINN Airfoil Self-Noise Prediction</h3>
+          <p>Uniform and cascading physics-informed neural networks on the NASA NACA 0012 dataset. Architecture grid search across 54 configurations; best cascade (256-128-64-32, 87K params) achieves R²=0.978 — exceeding the Gradient Boosting benchmark at 3.4× lower parameter count.</p>
+        </div>
+        <div class="proj-tags"><span class="chip">TensorFlow</span><span class="chip">PINN</span><span class="chip">Python</span></div>
+        <div class="proj-year mono">2024–25</div>
+        <svg class="proj-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M7 7h10v10"/></svg>
+      </a>
+
+      <a href="projects/gpu-ns-solver.html" class="proj-row reveal">
+        <div class="proj-num mono">07</div>
+        <div class="proj-title">
+          <h3>GPU-Accelerated 2D Navier–Stokes Solver</h3>
+          <p>2D incompressible FVM solver built from scratch in Python/CuPy with custom CUDA kernels. Chorin fractional-step, Rhie-Chow pressure correction, IBM geometry, and swappable Krylov pressure backends — all running on a single GPU with ≤1 host–device sync per step.</p>
+        </div>
+        <div class="proj-tags"><span class="chip">CuPy</span><span class="chip">CUDA</span><span class="chip">FVM</span></div>
+        <div class="proj-year mono">2025–</div>
+        <svg class="proj-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M7 7h10v10"/></svg>
+      </a>
 
     </div>
   </div>

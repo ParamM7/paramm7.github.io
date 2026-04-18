@@ -4,9 +4,22 @@
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>interEHDFoam Solver — Param Mankad</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,wght@0,400;0,500;1,400&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="../style.css"/>
 <script>(()=>{try{const p=JSON.parse(localStorage.getItem('pm_prefs_v1')||'{}');if(p.theme==='dark')document.documentElement.setAttribute('data-theme','dark');if(p.accent)document.documentElement.setAttribute('data-accent',p.accent);if(p.motion)document.documentElement.setAttribute('data-motion',p.motion);if(p.type)document.documentElement.setAttribute('data-type',p.type);}catch(e){}})();</script>
+<style>
+  .contrib-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.25rem 0; }
+  @media(max-width: 720px) { .contrib-grid { grid-template-columns: 1fr; } }
+  .contrib-card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 1.1rem 1.25rem; }
+  .contrib-card h4 { font-family: var(--f-mono); font-size: .75rem; font-weight: 600; color: var(--accent); margin: 0 0 .5rem; letter-spacing: .04em; text-transform: uppercase; }
+  .contrib-card p { font-size: .82rem; color: var(--ink-2); margin: 0; line-height: 1.6; }
+  .solver-chain { display: flex; flex-direction: column; gap: .5rem; margin: 1.25rem 0; }
+  .chain-step { display: flex; align-items: center; gap: .75rem; }
+  .chain-num { font-family: var(--f-mono); font-size: .68rem; color: var(--accent); min-width: 1.6rem; }
+  .chain-box { background: var(--panel); border: 1px solid var(--line); border-radius: 4px; padding: .4rem .9rem; font-size: .82rem; color: var(--ink-1); flex: 1; }
+  .chain-box strong { color: var(--ink-0); }
+  .chain-arrow { color: var(--ink-3); font-size: .8rem; }
+</style>
 </head>
 <body>
 
@@ -14,14 +27,14 @@
   <a href="../index.html" class="brand"><span class="brand-mark"></span>Param Mankad</a>
   <ul class="nav-links"><li><a href="../about.html">About</a></li><li><a href="../research.html">Research</a></li><li><a href="../experience.html">Experience</a></li><li><a href="../projects.html">Projects</a></li><li><a href="../awards.html">Awards</a></li><li><a href="../skills.html">Skills</a></li><li><a href="../gallery.html">Gallery</a></li></ul>
   <div class="nav-right"><button class="theme-toggle"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button><a href="../contact.html" class="nav-contact">Contact</a></div>
-  <button class="nav-hamburger"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+  <button class="nav-hamburger" aria-label="Menu" aria-expanded="false"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
 </div></nav>
 
 <header class="page-header">
   <div class="wrap">
     <div class="page-num mono reveal"><a href="../projects.html" style="color:var(--ink-3);text-decoration:none;">← Projects</a> · 01</div>
-    <h1 class="reveal">interEHDFoam<br/><em style="font-family:var(--f-serif);font-weight:400;">— energy-coupled multiphase solver.</em></h1>
-    <p class="lede reveal" style="margin-top:1.5rem;">Extending a volume-of-fluid electrohydrodynamic solver to include thermal transport — and simulating Taylor flow in capillary channels under external electric fields.</p>
+    <h1 class="reveal">interEHDFoam<br/><em style="font-family:var(--f-serif);font-weight:400;">— energy-coupled multiphase EHD solver.</em></h1>
+    <p class="lede reveal" style="margin-top:1.5rem;">Extending a volume-of-fluid electrohydrodynamic solver to couple sensible-enthalpy transport — enabling thermally-driven simulations of Taylor bubble dynamics in capillary channels under external electric fields.</p>
   </div>
 </header>
 
@@ -31,32 +44,104 @@
 
     <div class="detail-grid">
       <div class="prose reveal">
-        <h3>Context</h3>
-        <p>Multiphase electrohydrodynamics (EHD) studies the coupling between fluid motion and externally applied electric fields across a deformable interface. The OpenFOAM solver <em>interEHDFoam</em> — an EHD variant of <em>interFoam</em> — resolves two-phase flow via the volume-of-fluid (VoF) method while incorporating a Maxwell-stress body force from a solved electric field. It is well-suited for capillary-scale problems where surface tension and electrical forces compete.</p>
+
+        <h3>Background</h3>
+        <p>Multiphase electrohydrodynamics (EHD) studies the coupling between fluid motion, a deformable interface, and externally applied electric fields. The OpenFOAM solver <em>interEHDFoam</em> — an EHD variant of <em>interFoam</em> — resolves two-phase flow via the volume-of-fluid (VoF) method and augments the momentum equation with a Maxwell-stress body force computed from the solved electric potential field. It is well-suited for capillary-scale problems where surface tension, viscous forces, and electrical body forces interact across a sharp interface.</p>
+        <p>In the base solver, thermal effects are absent: fluid properties (conductivity, permittivity, surface tension) are treated as constant. This is a significant limitation because many practical EHD applications — electrohydrodynamic heat exchangers, two-phase cooling loops, electrically enhanced boiling — involve strong temperature gradients that feed back into the electrical and interfacial problem. The temperature dependence of electrical conductivity alone can cause order-of-magnitude variation across an interface in thermally stratified flows.</p>
 
         <h3>Objective</h3>
-        <p>Extend the base <em>interEHDFoam</em> solver to couple the sensible-enthalpy transport equation — enabling thermally-driven EHD simulations in which temperature fields modulate conductivity, permittivity, and surface tension, and in turn feed back into the flow.</p>
+        <p>Extend <em>interEHDFoam</em> at the solver level to couple the sensible-enthalpy transport equation — enabling simulations in which the temperature field modulates local electrical conductivity, permittivity, and surface tension, and these modifications in turn feed back into the electric body force, the interface dynamics, and the velocity field. The extension must preserve full compatibility with OpenFOAM's PIMPLE loop, native dictionary-based case setup, and the upstream VoF/EHD infrastructure.</p>
 
-        <h3>Methods</h3>
+        <h3>Governing Equations</h3>
+        <p>The coupled system solved at each PIMPLE outer iteration consists of five field equations:</p>
         <ul>
-          <li>Finite-volume discretisation of the sensible-enthalpy transport equation, with diffusive and convective flux assembly consistent with the VoF phase fraction.</li>
-          <li>Implicit pressure–velocity coupling via PIMPLE; Maxwell-stress body force added to momentum equation.</li>
-          <li>Mesh-independence studies performed on capillary geometries with Courant-number control Co ≤ 0.5.</li>
-          <li>Iterative convergence verification for pressure, velocity, electric potential, and temperature residuals.</li>
+          <li><strong>Continuity:</strong> ∇·U = 0</li>
+          <li><strong>Momentum:</strong> ρ[∂U/∂t + (U·∇)U] = −∇p + ∇·(μ∇U) + f<sub>σ</sub> + f<sub>EHD</sub></li>
+          <li><strong>VoF phase fraction:</strong> ∂α/∂t + ∇·(αU) + ∇·[α(1−α)U<sub>r</sub>] = 0</li>
+          <li><strong>Electric potential:</strong> ∇·(εE) = ρ<sub>e</sub> ; &nbsp; E = −∇φ</li>
+          <li><strong>Sensible-enthalpy transport (new):</strong></li>
+        </ul>
+        <div class="equation" style="font-size:.95rem;">
+          ρ ∂h/∂t + ρ(U·∇)h &nbsp;=&nbsp; ∇·(k∇T) + ∇·(M<sub>e</sub>·U) + Φ<sub>visc</sub>
+        </div>
+        <p>where h is the sensible enthalpy, k the thermal conductivity (phase-averaged), M<sub>e</sub> = ε(E⊗E − ½|E|²I) the Maxwell stress tensor, and Φ<sub>visc</sub> the viscous dissipation rate. The EHD body force in the momentum equation is f<sub>EHD</sub> = ρ<sub>e</sub>E − ½|E|²∇ε, combining the free-charge (Coulomb) and dielectrophoretic (gradient-permittivity) contributions.</p>
+
+        <h3>Solver Extension — What Was Modified</h3>
+
+        <div class="contrib-grid">
+          <div class="contrib-card">
+            <h4>Energy transport equation</h4>
+            <p>Finite-volume discretisation of the sensible-enthalpy equation added to the solver source files. Convective flux assembly uses the same face-interpolated VoF-weighted velocity as the momentum equation. Diffusive flux assembled with VoF-averaged thermal conductivity k = αk<sub>1</sub> + (1−α)k<sub>2</sub>. Implicit time discretisation (Euler implicit) for stability at the small Courant numbers required by the EHD interface (Co ≤ 0.5).</p>
+          </div>
+          <div class="contrib-card">
+            <h4>PIMPLE loop coupling</h4>
+            <p>The enthalpy equation is solved as an outer-loop field after the pressure–velocity convergence is achieved. Temperature is back-calculated from enthalpy (T = h/c<sub>p</sub>, phase-averaged) and used to update temperature-dependent properties before the next outer iteration. This explicit property update introduces one outer-loop lag, consistent with the treatment of surface-tension in the base solver.</p>
+          </div>
+          <div class="contrib-card">
+            <h4>Temperature-dependent properties</h4>
+            <p>Electrical conductivity σ(T) and relative permittivity ε<sub>r</sub>(T) are updated each outer iteration using linear or Arrhenius models specified in the thermophysical properties dictionary. The updated σ and ε fields modify the charge transport equation and Maxwell stress calculation at the next electric-field solve.</p>
+          </div>
+          <div class="contrib-card">
+            <h4>Interfacial energy consistency</h4>
+            <p>The enthalpy jump condition at the interface is handled through the VoF phase-fraction weighting — the same approach used for density and viscosity in interFoam. Latent heat effects (phase change) are outside the current scope; the extension targets subcooled thermal EHD without boiling.</p>
+          </div>
+        </div>
+
+        <h3>PIMPLE Loop Structure</h3>
+        <p>The modified outer-correction loop at each time step:</p>
+
+        <div class="solver-chain">
+          <div class="chain-step">
+            <span class="chain-num">01</span>
+            <div class="chain-box"><strong>VoF advection</strong> — solve phase-fraction equation, update ρ, μ, k, σ, ε at interface</div>
+          </div>
+          <div class="chain-step">
+            <span class="chain-num"></span>
+            <div class="chain-arrow" style="padding-left:1.6rem;">↓</div>
+          </div>
+          <div class="chain-step">
+            <span class="chain-num">02</span>
+            <div class="chain-box"><strong>Electric field solve</strong> — solve Laplace/Poisson equation for φ; compute E = −∇φ, f<sub>EHD</sub>, M<sub>e</sub></div>
+          </div>
+          <div class="chain-step">
+            <span class="chain-num"></span>
+            <div class="chain-arrow" style="padding-left:1.6rem;">↓ (PIMPLE outer loop)</div>
+          </div>
+          <div class="chain-step">
+            <span class="chain-num">03</span>
+            <div class="chain-box"><strong>Momentum predictor</strong> — explicit prediction with EHD body force and surface tension</div>
+          </div>
+          <div class="chain-step">
+            <span class="chain-num">04</span>
+            <div class="chain-box"><strong>PISO pressure–velocity</strong> — pressure equation + velocity corrector (inner loop)</div>
+          </div>
+          <div class="chain-step">
+            <span class="chain-num">05</span>
+            <div class="chain-box"><strong>Enthalpy transport</strong> — <em>new</em>: solve for h; update T, σ(T), ε(T) for next outer iteration</div>
+          </div>
+        </div>
+
+        <h3>Taylor Flow Case</h3>
+        <p>The primary test case is Taylor bubble advection through a square capillary cross-section under a transverse electric field. Taylor flow — alternating elongated bubbles and liquid slugs in confined channels — is the flow regime of interest for EHD-enhanced heat transfer in microchannels. Key physical phenomena under investigation:</p>
+        <ul>
+          <li><strong>Bubble morphology:</strong> Electric Bond number Ca<sub>E</sub> = ε<sub>0</sub>ε<sub>r</sub>E₀²R / σ<sub>surf</sub> governs the ratio of electric to surface-tension forces. At Ca<sub>E</sub> ~ O(1), measurable bubble elongation and nose/tail deformation are expected.</li>
+          <li><strong>Film thickness:</strong> The liquid film between the bubble wall and the capillary wall is sensitive to both the capillary number and the electric field — EHD-driven secondary flows can thin or thicken the film, directly affecting wall Nusselt number.</li>
+          <li><strong>Velocity field redistribution:</strong> The Maxwell stress at the interface drives secondary vortices in the liquid slug. These alter the mixing and heat transfer characteristics of the slug even in the absence of phase change.</li>
+          <li><strong>Courant stability:</strong> Interface cells require Co ≤ 0.5 to resolve the sharp gradient in α without numerical diffusion. The EHD electric-field solve adds no additional Courant constraint but does require iterative convergence for φ to below 10<sup>−6</sup> at each step.</li>
         </ul>
 
-        <h3>Taylor flow case</h3>
-        <p>Simulating Taylor bubble advection through a square capillary under an external electric field. Quantifying interfacial deformation, bubble elongation, and velocity-field redistribution as a function of the electric Bond number. Studying the morphological response of the bubble nose and tail, film thickness between bubble and wall, and local Nusselt number along the bubble body.</p>
+        <h3>Mesh and Numerics</h3>
+        <p>Capillary channel geometry meshed in OpenFOAM using <code>blockMesh</code> with localised refinement near the expected bubble region and walls. Interface sharpening in the VoF equation uses the counter-current compression term (compression velocity U<sub>r</sub>). Residual convergence targets: velocity 10<sup>−5</sup>, pressure 10<sup>−4</sup>, electric potential 10<sup>−6</sup>, temperature 10<sup>−5</sup>. All spatial schemes are second-order (Gauss linear). Time integration uses Euler implicit with adaptive time-stepping controlled by the Co ≤ 0.5 constraint.</p>
 
-        <h3>Current status</h3>
-        <p>Solver implementation in progress — base enthalpy transport added and verified against analytic conduction cases. Ongoing: validation against published benchmarks for electrohydrodynamic pumping (Taylor 1966) and Taylor bubble morphology (Bretherton 1961) with EHD forcing.</p>
-
-        <h3>Outcomes</h3>
+        <h3>Current Status and Outcomes</h3>
         <ul>
-          <li>Working OpenFOAM extension reading from native dictionary entries, preserving upstream compatibility.</li>
-          <li>Validated thermal transport module against conduction benchmarks.</li>
-          <li>Body of Taylor-flow simulation results in progress — to inform a conference/journal manuscript.</li>
+          <li>Base enthalpy transport equation added to the solver and verified against analytical conduction benchmarks (1D transient, steady-state between isothermal walls).</li>
+          <li>Temperature-dependent property update loop integrated and tested for single-phase channel flow with σ(T) variation.</li>
+          <li>Taylor-flow EHD simulations in progress: bubble morphology data at multiple Ca<sub>E</sub> values being assembled.</li>
+          <li>Validation against published benchmarks for EHD pumping (Taylor 1966) and Taylor bubble morphology (Bretherton 1961) with EHD forcing is ongoing.</li>
+          <li>Results to inform a conference or journal manuscript — target venue TBD in consultation with Prof. Absar Lakdawala.</li>
         </ul>
+
       </div>
 
       <aside class="detail-side reveal">
@@ -65,8 +150,12 @@
           <div class="data-row"><dt>Advisor</dt><dd>Prof. Absar Lakdawala<small>Multiphase Flow Research Lab</small></dd></div>
           <div class="data-row"><dt>Institution</dt><dd>Nirma University</dd></div>
           <div class="data-row"><dt>Timeline</dt><dd>Aug 2025 — Present</dd></div>
-          <div class="data-row"><dt>Tools</dt><dd>OpenFOAM · C++ · ParaView · Python<small>Linux HPC</small></dd></div>
-          <div class="data-row"><dt>Domain</dt><dd>CFD · Multiphase · EHD</dd></div>
+          <div class="data-row"><dt>Base solver</dt><dd>interEHDFoam<small>OpenFOAM EHD variant of interFoam</small></dd></div>
+          <div class="data-row"><dt>New equation</dt><dd>Sensible-enthalpy transport<small>FVM · implicit · VoF-averaged k</small></dd></div>
+          <div class="data-row"><dt>Coupling</dt><dd>PIMPLE outer loop<small>σ(T), ε(T) updated per iteration</small></dd></div>
+          <div class="data-row"><dt>Tools</dt><dd>OpenFOAM · C++ · ParaView<small>Python · Linux HPC</small></dd></div>
+          <div class="data-row"><dt>Stability</dt><dd>Co ≤ 0.5 · residuals 10⁻⁵–10⁻⁶</dd></div>
+          <div class="data-row"><dt>Domain</dt><dd>CFD · Multiphase · EHD · Heat transfer</dd></div>
         </dl>
       </aside>
     </div>
@@ -75,9 +164,10 @@
       <div><video src="../images/ehd.mp4" autoplay loop muted playsinline></video></div>
       <div><video src="../images/taylor.mp4" autoplay loop muted playsinline></video></div>
     </div>
+
   </div>
 </section>
 
-<footer class="site"><div class="wrap"><div class="footer-big reveal">Let's talk<br/><em class="ital">research, admissions, and flow.</em></div><div class="footer-cols"><div class="footer-col"><h5>Contact</h5><a href="mailto:parammankad@gmail.com">parammankad@gmail.com</a><a href="../contact.html">All channels →</a></div><div class="footer-col"><h5>Site</h5><a href="../index.html">Home</a><a href="../about.html">About</a><a href="../projects.html">Projects</a></div><div class="footer-col"><h5>More</h5><a href="../research.html">Research</a><a href="../awards.html">Awards</a><a href="../skills.html">Skills</a></div><div class="footer-col"><h5>Affiliation</h5><p>Nirma University<br/>Ahmedabad, India</p></div></div><div class="footer-meta"><span>© <span class="footer-year">2026</span> · Param Mankad</span><span>v1.0</span></div></div></footer>
+<footer class="site"><div class="wrap"><div class="footer-cols"><div class="footer-col"><h5>Contact</h5><a href="mailto:parammankad@gmail.com">parammankad@gmail.com</a><a href="../contact.html">All channels →</a></div><div class="footer-col"><h5>Site</h5><a href="../index.html">Home</a><a href="../about.html">About</a><a href="../projects.html">Projects</a></div><div class="footer-col"><h5>More</h5><a href="../research.html">Research</a><a href="../awards.html">Awards</a><a href="../skills.html">Skills</a></div><div class="footer-col"><h5>Affiliation</h5><p>Nirma University<br/>Ahmedabad, India</p></div></div><div class="footer-meta"><span>© <span class="footer-year">2026</span> · Param Mankad</span><span>v1.0</span></div></div></footer>
 <script src="../shared.js"></script>
 </body></html>

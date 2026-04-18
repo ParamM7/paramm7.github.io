@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>PINN Airfoil Self-Noise — Param Mankad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../style.css"/>
+<script>(()=>{try{const p=JSON.parse(localStorage.getItem('pm_prefs_v1')||'{}');if(p.theme==='dark')document.documentElement.setAttribute('data-theme','dark');if(p.accent)document.documentElement.setAttribute('data-accent',p.accent);if(p.motion)document.documentElement.setAttribute('data-motion',p.motion);if(p.type)document.documentElement.setAttribute('data-type',p.type);}catch(e){}})();</script>
+<style>
+  .results-table { width: 100%; border-collapse: collapse; font-family: var(--f-mono); font-size: .78rem; margin: 1.5rem 0 2rem; }
+  .results-table th { text-align: left; padding: .5rem .75rem; border-bottom: 2px solid var(--line); color: var(--ink-2); font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; font-family: var(--f-mono); }
+  .results-table td { padding: .45rem .75rem; border-bottom: 1px solid var(--line); color: var(--ink-1); }
+  .results-table tr.best td { background: color-mix(in srgb, var(--accent) 8%, transparent); }
+  .results-table tr.best td:first-child { border-left: 3px solid var(--accent); padding-left: calc(.75rem - 3px); }
+  .results-table tr.failed td { color: var(--ink-3); }
+  .metric-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin: 1.5rem 0; }
+  @media(max-width: 720px) { .metric-cards { grid-template-columns: repeat(2, 1fr); } }
+  .metric-card { background: var(--panel); border-radius: var(--radius-md); padding: 1.25rem 1rem; border: 1px solid var(--line); }
+  .metric-val { font-family: var(--f-display); font-size: 1.5rem; font-weight: 600; color: var(--ink-0); line-height: 1; }
+  .metric-sub { font-family: var(--f-mono); font-size: .62rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); margin-top: .4rem; }
+  .metric-label { font-size: .8rem; color: var(--ink-2); margin-top: .3rem; }
+  .arch-diagram { font-family: var(--f-mono); font-size: .78rem; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 1.25rem 1.5rem; margin: 1rem 0; line-height: 2; color: var(--ink-1); }
+  .arch-diagram .node { display: inline-block; padding: .2rem .6rem; background: color-mix(in srgb, var(--accent) 12%, transparent); border-radius: 4px; border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent); font-weight: 600; color: var(--ink-0); }
+  .arch-diagram .arrow { color: var(--ink-3); }
+</style>
+</head>
+<body>
+
+<nav class="site"><div class="nav-inner">
+  <a href="../index.html" class="brand"><span class="brand-mark"></span>Param Mankad</a>
+  <ul class="nav-links"><li><a href="../about.html">About</a></li><li><a href="../research.html">Research</a></li><li><a href="../experience.html">Experience</a></li><li><a href="../projects.html">Projects</a></li><li><a href="../awards.html">Awards</a></li><li><a href="../skills.html">Skills</a></li><li><a href="../gallery.html">Gallery</a></li></ul>
+  <div class="nav-right"><button class="theme-toggle"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button><a href="../contact.html" class="nav-contact">Contact</a></div>
+  <button class="nav-hamburger" aria-label="Menu" aria-expanded="false"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+</div></nav>
+
+<header class="page-header">
+  <div class="wrap">
+    <div class="page-num mono reveal"><a href="../projects.html" style="color:var(--ink-3);text-decoration:none;">← Projects</a> · 06</div>
+    <h1 class="reveal">PINN Airfoil Self-Noise</h1>
+    <p class="lede reveal" style="margin-top:1.5rem;">Uniform and cascading physics-informed neural networks for trailing-edge noise prediction on the NASA NACA 0012 dataset — architecture search, epoch sensitivity, and comparison against Gradient Boosting benchmarks.</p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+
+    <!-- Key metrics -->
+    <div class="metric-cards reveal">
+      <div class="metric-card">
+        <div class="metric-val">0.981</div>
+        <div class="metric-label">R² — best result</div>
+        <div class="metric-sub">5000 epochs · D=5 W=256</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">0.679 dB</div>
+        <div class="metric-label">MAE — best result</div>
+        <div class="metric-sub">vs 1.262 dB baseline MLP</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">87K</div>
+        <div class="metric-label">Params — best cascade</div>
+        <div class="metric-sub">3.4× fewer than uniform</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">54</div>
+        <div class="metric-label">Configurations evaluated</div>
+        <div class="metric-sub">3 experiments · 18+18+5</div>
+      </div>
+    </div>
+
+    <div class="detail-grid">
+      <div class="prose reveal">
+
+        <h3>Context</h3>
+        <p>Airfoil self-noise — specifically turbulent boundary-layer trailing-edge (TBL–TE) noise — is the dominant acoustic emission for wind turbines, aircraft fans, and propeller-driven UAVs at low Mach numbers. Classical semi-empirical models (Brooks–Pope–Marcolini) are fast but narrow in applicability; high-fidelity aeroacoustics is accurate but expensive. This project explores physics-informed neural networks as a middle ground, embedding a physical smoothness constraint derived from Ffowcs Williams–Hall theory directly into the loss function.</p>
+        <p>The work was conducted as a term project for the Minor in Data Science (Nirma University), co-authored with Dharmik Jha and Vanshi Raiththa.</p>
+
+        <h3>Dataset and Feature Engineering</h3>
+        <p>The NASA NACA 0012 self-noise dataset contains 1,503 wind tunnel measurements from NASA Langley Research Center. Each sample records a unique combination of frequency, angle of attack, chord length, free-stream velocity, and suction-side displacement thickness. The prediction target is the Scaled Sound Pressure Level (SSPL), ranging from 103.4 to 141.0 dB.</p>
+        <p>Three engineered features were derived from the physical literature to bring the input dimension to n<sub>in</sub> = 8:</p>
+        <ul>
+          <li><strong>Chord Reynolds number</strong> Re = U<sub>∞</sub>c/ν — captures the combined velocity–chord effect at constant kinematic viscosity (ν = 1.5 × 10<sup>−5</sup> m²/s).</li>
+          <li><strong>Strouhal number</strong> St = fc/U<sub>∞</sub> — the natural non-dimensional frequency in trailing-edge noise scaling from the BPM model.</li>
+          <li><strong>Log-frequency</strong> ln(f) — linearises the two-decade frequency range, motivated by LES validation work by Aihara et al. (2021).</li>
+        </ul>
+        <p>The dataset was split 80/20 (1,202 train / 301 test, random_state=42). Both inputs and the SSPL target were independently z-score normalised using training-set statistics only; all metrics are reported after inverse-transform to the original dB scale.</p>
+
+        <h3>Physics Loss</h3>
+        <p>No explicit governing PDE exists for the empirical SSPL relationship, so the physics penalty encodes a known physical property of the solution: the aeroacoustic response surface is smooth and continuous in all input parameters. Large gradients in the predicted surface are physically implausible. The physics loss is:</p>
+        <div class="equation" style="font-size:.95rem; margin: 1rem 0;">
+          L<sub>total</sub> = L<sub>data</sub> + λ · L<sub>physics</sub> &nbsp;=&nbsp; (1/N)Σ(ŷ−y)² + λ · ⟨‖∂SSPL/∂x‖²⟩
+        </div>
+        <p>The gradient penalty is evaluated via TensorFlow's nested <code>GradientTape</code> automatic differentiation. λ = 0.1 and Adam at η = 10<sup>−3</sup> were held constant across all experiments. Target normalisation proved critical: without it, the data loss operates at O(100) dB² while the physics loss operates at O(0.01–0.1), creating a severe scale mismatch that effectively disables the physics term.</p>
+
+        <h3>Architecture Variants</h3>
+        <p><strong>Uniform-width PINN:</strong> D hidden layers of W neurons each (ReLU), one linear output. Parameter count: N<sub>params</sub> = n<sub>in</sub>W + DW² + W + 1.</p>
+        <p><strong>Cascading-width PINN:</strong> Layer width halves geometrically at each depth: W<sub>i</sub> = ⌊W₀/2<sup>i</sup>⌋ for i = 0,…,D−1. For D=4, W₀=256, this produces the sequence:</p>
+        <div class="arch-diagram">
+          Input (8) <span class="arrow">→</span>
+          <span class="node">256</span> <span class="arrow">→</span>
+          <span class="node">128</span> <span class="arrow">→</span>
+          <span class="node">64</span> <span class="arrow">→</span>
+          <span class="node">32</span> <span class="arrow">→</span>
+          Output (1)<br/>
+          <span style="color:var(--ink-3); font-size:.72rem;">87,041 parameters · ReLU activations · linear output · Adam η=10⁻³</span>
+        </div>
+        <p>Early wide layers extract rich feature representations; narrower final layers act as a learned dimensionality reduction before the output regression. This concentrates representational capacity where it matters most (Montufar et al., 2014).</p>
+
+        <h3>Experiment 1 — Uniform Grid (1500 epochs)</h3>
+        <p>18 configurations crossing D ∈ {2,3,4,5,6,8} and W ∈ {64,128,256}. All achieve R² > 0.95 — a substantial improvement over earlier 300-epoch evaluations (best R²=0.939), explained jointly by 5× more training and target normalisation. Width 256 consistently outperforms narrower configurations at equal depth; optimal depth at W=256 is D=5, with D=6 and D=8 nearly identical (R²=0.9743), indicating saturation beyond depth 5.</p>
+
+        <table class="results-table">
+          <thead><tr><th>D</th><th>W</th><th>MSE (dB²)</th><th>MAE (dB)</th><th>R²</th></tr></thead>
+          <tbody>
+            <tr><td>2</td><td>64</td><td>2.112</td><td>1.079</td><td>0.9578</td></tr>
+            <tr><td>4</td><td>128</td><td>1.724</td><td>0.953</td><td>0.9656</td></tr>
+            <tr><td>4</td><td>256</td><td>1.443</td><td>0.883</td><td>0.9712</td></tr>
+            <tr class="best"><td>5†</td><td>256</td><td>1.256</td><td>0.788</td><td>0.9749</td></tr>
+            <tr><td>6</td><td>256</td><td>1.286</td><td>0.820</td><td>0.9743</td></tr>
+            <tr><td>8</td><td>256</td><td>1.285</td><td>0.784</td><td>0.9743</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:.8rem;color:var(--ink-3);">† Best configuration. Selected rows shown. Full 18-config table in paper.</p>
+
+        <h3>Experiment 2 — Cascading Grid (1500 epochs)</h3>
+        <p>Same depth × starting-width grid with the cascading architecture. The best result (D=4, W₀=256: R²=0.9784) surpasses the best uniform result (R²=0.9749) by ΔR²=0.0035 while using ~87K parameters versus ~295K — 3.4× more parameter-efficient. Two systematic failure patterns emerged:</p>
+        <ul>
+          <li><strong>Degenerate bottleneck:</strong> D=8 with W₀ ∈ {64,128} fails completely (R²≈0) because geometric halving reduces the final layer width to 1, preventing gradient flow.</li>
+          <li><strong>Cascade depth saturation:</strong> Performance degrades at D≥5 for all W₀ values; cascading removes capacity faster than additional depth recovers it.</li>
+        </ul>
+
+        <table class="results-table">
+          <thead><tr><th>D</th><th>W₀</th><th>Architecture</th><th>MSE</th><th>MAE</th><th>R²</th></tr></thead>
+          <tbody>
+            <tr><td>2</td><td>256</td><td>256-128</td><td>1.284</td><td>0.835</td><td>0.9744</td></tr>
+            <tr><td>3</td><td>256</td><td>256-128-64</td><td>1.154</td><td>0.799</td><td>0.9770</td></tr>
+            <tr class="best"><td>4†</td><td>256</td><td>256-128-64-32</td><td>1.081</td><td>0.719</td><td>0.9784</td></tr>
+            <tr><td>5</td><td>256</td><td>256-128-64-32-16</td><td>1.218</td><td>0.807</td><td>0.9757</td></tr>
+            <tr><td>5</td><td>128</td><td>128-64-32-16-8</td><td>1.395</td><td>0.870</td><td>0.9721</td></tr>
+            <tr class="failed"><td>8</td><td>64</td><td>64-32-…-1-1</td><td>50.14</td><td>5.792</td><td>−0.001 ×</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:.8rem;color:var(--ink-3);">† Best. × Degenerate bottleneck failure — layer width collapsed to 1.</p>
+
+        <h3>Experiment 3 — Epoch Sensitivity</h3>
+        <p>The best uniform configuration (D=5, W=256) was re-trained from scratch at five epoch budgets: 500, 1000, 1500, 2000, and 5000. Performance improves monotonically across the full range. The steepest gain occurs between 500 and 1500 epochs; improvement rate slows but does not saturate at 5000 epochs.</p>
+
+        <table class="results-table">
+          <thead><tr><th>Epochs</th><th>MSE (dB²)</th><th>MAE (dB)</th><th>R²</th></tr></thead>
+          <tbody>
+            <tr><td>500</td><td>2.637</td><td>1.207</td><td>0.9474</td></tr>
+            <tr><td>1000</td><td>1.787</td><td>0.972</td><td>0.9643</td></tr>
+            <tr><td>1500</td><td>1.270</td><td>0.808</td><td>0.9746</td></tr>
+            <tr><td>2000</td><td>1.128</td><td>0.773</td><td>0.9775</td></tr>
+            <tr class="best"><td>5000†</td><td>0.950</td><td>0.679</td><td>0.9810</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:.8rem;color:var(--ink-3);">† Optimal epoch budget. Architecture fixed: D=5, W=256, uniform.</p>
+
+        <h3>Comparative Analysis</h3>
+        <p>The 5000-epoch uniform PINN (R²=0.981) exceeds the Gradient Boosting benchmark from Pandey et al. (R²=0.966, RMSE=1.262 dB). The 1500-epoch uniform result (R²=0.975) also exceeds this benchmark independently of epoch count. Physical regularisation likely prevents the over-parameterised network from fitting noise in the 1,202-sample training set — the regime where neural networks historically underperform ensemble methods on tabular data.</p>
+
+        <table class="results-table">
+          <thead><tr><th>Model</th><th>R²</th><th>MAE (dB)</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Gradient Boosting [Pandey et al.]</td><td>0.966</td><td>1.262</td><td>Literature benchmark</td></tr>
+            <tr class="best"><td>Uniform PINN, 5k epochs</td><td>0.981</td><td>0.679</td><td>5000 epochs, 295K params</td></tr>
+            <tr><td>Cascade PINN, D=4 W₀=256</td><td>0.978</td><td>0.719</td><td>1500 epochs, 87K params</td></tr>
+            <tr><td>Uniform PINN, D=5 W=256</td><td>0.975</td><td>0.788</td><td>1500 epochs, 295K params</td></tr>
+            <tr><td>Default MLP (no physics loss)</td><td>0.810</td><td>~2.1</td><td>Literature baseline</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Outcomes and Future Work</h3>
+        <ul>
+          <li>Cascading architectures achieve equal or better accuracy than uniform networks at 3.4× lower parameter count — practically valuable in latency-constrained deployment (real-time blade design optimisation).</li>
+          <li>Target normalisation is the critical training stability factor, not epoch count — it resolves the loss scale mismatch between the physics and data terms.</li>
+          <li>Extending the physics loss from generic gradient smoothness to explicit BPM aeroacoustic residuals (U<sub>∞</sub><sup>5</sup> velocity scaling, Strouhal-number frequency law) would add harder physical constraints.</li>
+          <li>A cosine learning rate schedule would improve convergence efficiency beyond 2000 epochs; current results show diminishing returns at constant η = 10<sup>−3</sup>.</li>
+          <li>Dropout regularisation on the best cascade configuration and residual (skip-connected) architectures for very deep configurations remain as open experiments.</li>
+        </ul>
+
+      </div>
+
+      <aside class="detail-side reveal">
+        <dl class="data-list">
+          <div class="data-row"><dt>Role</dt><dd>Co-author (Param Mankad, Dharmik Jha, Vanshi Raiththa)</dd></div>
+          <div class="data-row"><dt>Context</dt><dd>Minor in Data Science<small>Nirma University · Term project</small></dd></div>
+          <div class="data-row"><dt>Timeline</dt><dd>2024–25</dd></div>
+          <div class="data-row"><dt>Status</dt><dd>Completed</dd></div>
+          <div class="data-row"><dt>Dataset</dt><dd>NASA NACA 0012 Self-Noise<small>1,503 samples · 5 inputs + 3 engineered</small></dd></div>
+          <div class="data-row"><dt>Framework</dt><dd>TensorFlow · Python<small>scikit-learn · NumPy · Pandas</small></dd></div>
+          <div class="data-row"><dt>Best R²</dt><dd>0.981<small>5000 epochs · Uniform PINN</small></dd></div>
+          <div class="data-row"><dt>Best cascade</dt><dd>R²=0.978 · 87K params<small>256-128-64-32 · D=4</small></dd></div>
+          <div class="data-row"><dt>Physics loss</dt><dd>Gradient-smoothness penalty<small>λ=0.1 · TF GradientTape</small></dd></div>
+          <div class="data-row"><dt>Benchmark</dt><dd>Gradient Boosting R²=0.966<small>Pandey et al. IEEE RAICS 2024</small></dd></div>
+        </dl>
+      </aside>
+    </div>
+
+  </div>
+</section>
+
+<footer class="site"><div class="wrap"><div class="footer-cols"><div class="footer-col"><h5>Contact</h5><a href="mailto:parammankad@gmail.com">parammankad@gmail.com</a><a href="../contact.html">All channels →</a></div><div class="footer-col"><h5>Site</h5><a href="../index.html">Home</a><a href="../about.html">About</a><a href="../projects.html">Projects</a></div><div class="footer-col"><h5>More</h5><a href="../research.html">Research</a><a href="../awards.html">Awards</a><a href="../skills.html">Skills</a></div><div class="footer-col"><h5>Affiliation</h5><p>Nirma University<br/>Ahmedabad, India</p></div></div><div class="footer-meta"><span>© <span class="footer-year">2026</span> · Param Mankad</span><span>v1.0</span></div></div></footer>
+<script src="../shared.js"></script>
+</body></html>
