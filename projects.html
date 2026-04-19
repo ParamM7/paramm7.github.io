@@ -6,6 +6,15 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="style.css"/>
+<style>
+@media(min-width:901px){
+  .proj-list .proj-row { grid-template-columns: 52px 2.1fr 1.15fr 0.85fr 72px; }
+  .proj-list .proj-row--static { grid-template-columns: 52px 2.1fr 1.15fr 0.85fr 72px; }
+}
+@media(max-width:900px){
+  .proj-cover-mini { display: none; }
+}
+</style>
 <script>(()=>{try{const p=JSON.parse(localStorage.getItem('pm_prefs_v1')||'{}');if(p.theme==='dark')document.documentElement.setAttribute('data-theme','dark');if(p.accent)document.documentElement.setAttribute('data-accent',p.accent);if(p.motion)document.documentElement.setAttribute('data-motion',p.motion);if(p.type)document.documentElement.setAttribute('data-type',p.type);}catch(e){}})();</script>
 </head>
 <body>
@@ -38,6 +47,7 @@
           <h3>interEHDFoam — Energy-Coupled EHD Solver</h3>
           <p>OpenFOAM solver extension adding sensible-enthalpy transport to a multiphase electrohydrodynamic VoF solver for thermally-coupled interfacial dynamics.</p>
         </div>
+        <div class="proj-cover-mini"><video src="images/ehd.mp4" autoplay loop muted playsinline></video></div>
         <div class="proj-tags"><span class="chip">OpenFOAM</span><span class="chip">C++</span><span class="chip">EHD</span></div>
         <div class="proj-year mono">2025–</div>
         <svg class="proj-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M7 7h10v10"/></svg>
@@ -49,8 +59,9 @@
           <h3>VTOL–Fixed-Wing Hybrid UAV</h3>
           <p>Rotor-aerodynamic CFD of a next-generation hybrid UAV platform; MRF rotating subdomain, full-configuration RANS, transition-regime induced-drag analysis.</p>
         </div>
+        <div class="proj-cover-mini"><img src="images/vtol.jpg" alt="VTOL UAV"/></div>
         <div class="proj-tags"><span class="chip">Fluent</span><span class="chip">MRF</span><span class="chip">VTOL</span></div>
-        <div class="proj-year mono">2025</div>
+        <div class="proj-year mono">2025–2026</div>
         <svg class="proj-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M7 7h10v10"/></svg>
       </a>
 
@@ -60,51 +71,56 @@
           <h3>SUAS 2025 — Mission-Capable Autonomous UAV</h3>
           <p>Autonomous fixed-wing platform for the Student UAS competition. Aerodynamic &amp; structural validation, mission planning, ground-station integration. <strong>1st place globally, 81 teams.</strong></p>
         </div>
+        <div class="proj-cover-mini"><img src="images/suas.jpg" alt="SUAS 2025"/></div>
         <div class="proj-tags"><span class="chip">Mission planning</span><span class="chip">Fixed-wing</span><span class="chip">Autonomy</span></div>
-        <div class="proj-year mono">2025</div>
+        <div class="proj-year mono">2024–2025</div>
         <svg class="proj-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M7 7h10v10"/></svg>
       </a>
-
-      <a href="projects/micro-uav.html" class="proj-row reveal">
-        <div class="proj-num mono">04</div>
-        <div class="proj-title">
-          <h3>Micro-Class Fixed-Wing UAV — Design Evolution</h3>
-          <p>Aerodynamic performance assessment of a micro-class fixed-wing UAV using XFLR5 panel methods and RANS simulations. Peer-reviewed conference paper (FMFP 2025).</p>
-        </div>
-        <div class="proj-tags"><span class="chip">XFLR5</span><span class="chip">RANS</span><span class="chip">Published</span></div>
-        <div class="proj-year mono">2024–25</div>
-        <svg class="proj-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M7 7h10v10"/></svg>
-      </a>
-
-      <div class="proj-row proj-row--static reveal">
-        <div class="proj-num mono">05</div>
-        <div class="proj-title">
-          <h3>High-Payload Fixed-Wing UAV</h3>
-          <p>Aerodynamic performance assessment of a payload-optimized fixed-wing UAV. Manuscript in preparation — targeting <em>Journal of Flow Visualization and Image Processing</em>.</p>
-        </div>
-        <div class="proj-tags"><span class="chip">XFLR5</span><span class="chip">Fluent</span><span class="chip">In prep</span></div>
-        <div class="proj-year mono">2025–26</div>
-      </div>
 
       <a href="projects/pinn-airfoil-noise.html" class="proj-row reveal">
-        <div class="proj-num mono">06</div>
+        <div class="proj-num mono">04</div>
         <div class="proj-title">
           <h3>PINN Airfoil Self-Noise Prediction</h3>
-          <p>Uniform and cascading physics-informed neural networks on the NASA NACA 0012 dataset. Architecture grid search across 54 configurations; best cascade (256-128-64-32, 87K params) achieves R²=0.978 — exceeding the Gradient Boosting benchmark at 3.4× lower parameter count.</p>
+          <p>Uniform and cascading physics-informed neural networks on the NASA NACA 0012 dataset. Architecture grid search across 54 configurations; best cascade achieves R²=0.978 — exceeding the Gradient Boosting benchmark at 3.4× lower parameter count.</p>
         </div>
+        <div class="proj-cover-mini"><img src="images/gallery-3.png" alt="PINN"/></div>
         <div class="proj-tags"><span class="chip">TensorFlow</span><span class="chip">PINN</span><span class="chip">Python</span></div>
-        <div class="proj-year mono">2024–25</div>
+        <div class="proj-year mono">2026</div>
         <svg class="proj-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M7 7h10v10"/></svg>
       </a>
 
       <a href="projects/gpu-ns-solver.html" class="proj-row reveal">
-        <div class="proj-num mono">07</div>
+        <div class="proj-num mono">05</div>
         <div class="proj-title">
           <h3>GPU-Accelerated 2D Navier–Stokes Solver</h3>
-          <p>2D incompressible FVM solver built from scratch in Python/CuPy with custom CUDA kernels. Chorin fractional-step, Rhie-Chow pressure correction, IBM geometry, and swappable Krylov pressure backends — all running on a single GPU with ≤1 host–device sync per step.</p>
+          <p>2D incompressible FVM solver built from scratch in Python/CuPy with custom CUDA kernels. Chorin fractional-step, Rhie-Chow pressure correction, IBM geometry, and swappable Krylov pressure backends — all on a single GPU with ≤1 host–device sync per step.</p>
         </div>
+        <div class="proj-cover-mini"><img src="images/gallery-1.png" alt="GPU NS Solver"/></div>
         <div class="proj-tags"><span class="chip">CuPy</span><span class="chip">CUDA</span><span class="chip">FVM</span></div>
-        <div class="proj-year mono">2025–</div>
+        <div class="proj-year mono">2026–</div>
+        <svg class="proj-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M7 7h10v10"/></svg>
+      </a>
+
+      <div class="proj-row proj-row--static reveal">
+        <div class="proj-num mono">06</div>
+        <div class="proj-title">
+          <h3>High-Payload Fixed-Wing UAV</h3>
+          <p>Aerodynamic performance assessment of a payload-optimized fixed-wing UAV. Manuscript in preparation — targeting <em>Journal of Flow Visualization and Image Processing</em>.</p>
+        </div>
+        <div class="proj-cover-mini"><img src="images/micro-x4.png" alt="High-payload UAV"/></div>
+        <div class="proj-tags"><span class="chip">XFLR5</span><span class="chip">Fluent</span><span class="chip">In prep</span></div>
+        <div class="proj-year mono">2025–26</div>
+      </div>
+
+      <a href="projects/micro-uav.html" class="proj-row reveal">
+        <div class="proj-num mono">07</div>
+        <div class="proj-title">
+          <h3>Micro-Class Fixed-Wing UAV — Design Evolution</h3>
+          <p>Aerodynamic performance assessment of a micro-class fixed-wing UAV using XFLR5 panel methods and RANS simulations. Peer-reviewed conference paper (FMFP 2025).</p>
+        </div>
+        <div class="proj-cover-mini"><img src="images/micro-uav.jpg" alt="Micro UAV"/></div>
+        <div class="proj-tags"><span class="chip">XFLR5</span><span class="chip">RANS</span><span class="chip">Published</span></div>
+        <div class="proj-year mono">2024–25</div>
         <svg class="proj-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M7 7h10v10"/></svg>
       </a>
 

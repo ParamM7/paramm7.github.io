@@ -33,40 +33,11 @@
       <div class="prose reveal">
 
         <h3>Background</h3>
-        <p>Multiphase electrohydrodynamics (EHD) studies the coupling between fluid motion, a deformable interface, and externally applied electric fields. The OpenFOAM solver <em>interEHDFoam</em> — an EHD variant of <em>interFoam</em> — resolves two-phase flow via the volume-of-fluid (VoF) method and augments the momentum equation with a Maxwell-stress body force computed from the solved electric potential field. It is well-suited for capillary-scale problems where surface tension, viscous forces, and electrical body forces interact across a sharp interface.</p>
+        <p>Multiphase electrohydrodynamics (EHD) studies the coupling between fluid motion, a deformable interface, and externally applied electric fields. The OpenFOAM solver <code style="background:var(--accent-soft);color:var(--accent);padding:.1em .35em;border-radius:.25em;font-size:.9em;font-family:var(--f-mono)">interEHDFoam</code> — an EHD variant of <em>interFoam</em> — resolves two-phase flow via the volume-of-fluid (VoF) method and augments the momentum equation with a Maxwell-stress body force computed from the solved electric potential field. It is well-suited for capillary-scale problems where surface tension, viscous forces, and electrical body forces interact across a sharp interface.</p>
         <p>In the base solver, thermal effects are absent: fluid properties (conductivity, permittivity, surface tension) are treated as constant. This is a significant limitation because many practical EHD applications — electrohydrodynamic heat exchangers, two-phase cooling loops, electrically enhanced boiling — involve strong temperature gradients that feed back into the electrical and interfacial problem. The temperature dependence of electrical conductivity alone can cause order-of-magnitude variation across an interface in thermally stratified flows.</p>
 
         <h3>Objective</h3>
-        <p>Extend <em>interEHDFoam</em> at the solver level to couple the sensible-enthalpy transport equation — enabling simulations in which the temperature field modulates local electrical conductivity, permittivity, and surface tension, and these modifications in turn feed back into the electric body force, interface dynamics, and velocity field. The extension must preserve full compatibility with OpenFOAM's PIMPLE loop, native dictionary-based case setup, and the upstream VoF/EHD infrastructure.</p>
-
-        <h3>Governing Equations</h3>
-        <p>The coupled system solved at each PIMPLE outer iteration consists of five field equations:</p>
-        <ul class="tl-bullets">
-          <li><strong>Continuity:</strong> ∇·U = 0</li>
-          <li><strong>Momentum:</strong> ρ[∂U/∂t + (U·∇)U] = −∇p + ∇·(μ∇U) + f<sub>σ</sub> + f<sub>EHD</sub></li>
-          <li><strong>VoF phase fraction:</strong> ∂α/∂t + ∇·(αU) + ∇·[α(1−α)U<sub>r</sub>] = 0</li>
-          <li><strong>Electric potential:</strong> ∇·(εE) = ρ<sub>e</sub> ; &nbsp; E = −∇φ</li>
-          <li><strong>Sensible-enthalpy transport (new):</strong> ρ ∂h/∂t + ρ(U·∇)h = ∇·(k∇T) + ∇·(M<sub>e</sub>·U) + Φ<sub>visc</sub></li>
-        </ul>
-        <p>h is the sensible enthalpy, k the thermal conductivity (phase-averaged), M<sub>e</sub> = ε(E⊗E − ½|E|²I) the Maxwell stress tensor, and Φ<sub>visc</sub> the viscous dissipation rate. The EHD body force is f<sub>EHD</sub> = ρ<sub>e</sub>E − ½|E|²∇ε, combining the free-charge (Coulomb) and dielectrophoretic (gradient-permittivity) contributions.</p>
-
-        <h3>Solver Extension — What Was Modified</h3>
-        <ul class="tl-bullets">
-          <li><strong>Energy transport equation:</strong> Finite-volume discretisation of the sensible-enthalpy equation added to the solver source files. Convective flux assembly uses the same face-interpolated VoF-weighted velocity as the momentum equation. Diffusive flux assembled with VoF-averaged thermal conductivity k = αk<sub>1</sub> + (1−α)k<sub>2</sub>. Implicit time discretisation (Euler implicit) for stability at the small Courant numbers required by the EHD interface (Co ≤ 0.5).</li>
-          <li><strong>PIMPLE loop coupling:</strong> The enthalpy equation is solved as an outer-loop field after pressure–velocity convergence is achieved. Temperature is back-calculated from enthalpy (T = h/c<sub>p</sub>, phase-averaged) and used to update temperature-dependent properties before the next outer iteration. This explicit property update introduces one outer-loop lag, consistent with the treatment of surface tension in the base solver.</li>
-          <li><strong>Temperature-dependent properties:</strong> Electrical conductivity σ(T) and relative permittivity ε<sub>r</sub>(T) are updated each outer iteration using linear or Arrhenius models specified in the thermophysical properties dictionary. The updated σ and ε fields modify the charge transport equation and Maxwell stress calculation at the next electric-field solve.</li>
-          <li><strong>Interfacial energy consistency:</strong> The enthalpy jump condition at the interface is handled through VoF phase-fraction weighting — the same approach used for density and viscosity in <em>interFoam</em>. Latent heat effects (phase change) are outside the current scope; the extension targets subcooled thermal EHD without boiling.</li>
-        </ul>
-
-        <h3>PIMPLE Loop Structure</h3>
-        <p>The modified outer-correction loop at each time step proceeds through five stages:</p>
-        <ul class="tl-bullets">
-          <li><strong>01 · VoF advection</strong> — solve the phase-fraction equation; update ρ, μ, k, σ, ε at the interface.</li>
-          <li><strong>02 · Electric field solve</strong> — solve Laplace/Poisson equation for φ; compute E = −∇φ, f<sub>EHD</sub>, M<sub>e</sub>.</li>
-          <li><strong>03 · Momentum predictor</strong> — explicit prediction with EHD body force and surface tension contributions.</li>
-          <li><strong>04 · PISO pressure–velocity</strong> — pressure equation + velocity corrector in the PISO inner loop.</li>
-          <li><strong>05 · Enthalpy transport (new)</strong> — solve for h; update T, σ(T), ε(T) for the next outer iteration.</li>
-        </ul>
+        <p>Extend <code style="background:var(--accent-soft);color:var(--accent);padding:.1em .35em;border-radius:.25em;font-size:.9em;font-family:var(--f-mono)">interEHDFoam</code> at the solver level to couple the sensible-enthalpy transport equation — enabling simulations in which the temperature field modulates local electrical conductivity, permittivity, and surface tension, and these modifications in turn feed back into the electric body force, interface dynamics, and velocity field. The extension must preserve full compatibility with OpenFOAM's PIMPLE loop, native dictionary-based case setup, and the upstream VoF/EHD infrastructure.</p>
 
         <h3>Taylor Flow Case</h3>
         <p>The primary test case is Taylor bubble advection through a square capillary cross-section under a transverse electric field. Taylor flow — alternating elongated bubbles and liquid slugs in confined channels — is the flow regime of interest for EHD-enhanced heat transfer in microchannels. Key physical phenomena under investigation:</p>
